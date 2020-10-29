@@ -1,24 +1,35 @@
-#include <SFML/Graphics.hpp>
+/*#include "SFML\Graphics.hpp"
+#include"SFML\System.hpp"
+#include"SFML\Window.hpp"
+#include"SFML\Audio.hpp"
+#include"SFML\Network.hpp"
 
+using namespace sf;
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+	RenderWindow window(VideoMode(640, 400), "Example 02", sf :: Style::Default);
+	window.setFramerateLimit(60);
+	CircleShape shape(50.f);
+	while (window.isOpen())
+	{
+		Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+				window.close();
+		
+			
+		}
+		//update
+		shape.move(0.3f, 0.f);
 
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+		//draw
 
-        window.clear();
-        window.draw(shape);
-        window.display();
-    }
+		window.clear(Color::Cyan);
+		//draw everything
+		window.draw(shape);
 
-    return 0;
-}
+		window.display();
+	}
+	return 0;
+}*/
