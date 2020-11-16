@@ -7,7 +7,7 @@
 #include<time.h>
 using namespace sf;
 int p=0;
-
+int jk = 0;
 float x, y;
 int c = 0, v, b, n = 0;
 char keyx = '.';
@@ -15,12 +15,16 @@ int health = 3;
 int banana = 0;
 int apple = 0;
 int grape = 0;
+int k = 0;
 float invincible = 0;
 float time2 = 0;
 char times[5] = "Time";
-int specialbomb =10;
+int specialbomb =0;
 bool bomb10 = 0;
+int fire = 0;
+bool fire2 = 0;
 int exploding = 0;
+int mv = 0;
 /*int time10() {
 	int i;
 	for (i = 1; i <= 10; i++);
@@ -142,7 +146,7 @@ int main()
 	if (!warpTexture.loadFromFile("warp.png"));
 	//////Texture explosion
 	sf::Texture explosionTexture;
-	if (!explosionTexture.loadFromFile("explosion.png"));
+	if (!explosionTexture.loadFromFile("splash2.png"));
 	//////Texture Wall
 	sf::Texture wallTexture;
 	if (!wallTexture.loadFromFile("wall-2.png"));
@@ -173,12 +177,18 @@ int main()
 	//////Texture angry bomb
 	sf::Texture specialbombTexture;
 	if (!specialbombTexture.loadFromFile("angry.png"));
+	//////Texture fire
+	sf::Texture fireTexture;
+	if (!fireTexture.loadFromFile("firesheild.png"));
+	//////Texture fireeffect
+	sf::Texture fireeffectTexture;
+	if (!fireeffectTexture.loadFromFile("fire2.1.png"));
 	//////Texture lose
 	sf::Texture timerTexture;
 	if (!timerTexture.loadFromFile("timer.png"));
 	//////Texture explosion2
 	sf::Texture explosion2Texture;
-	if (!explosion2Texture.loadFromFile("explosion-2-1.png"));
+	if (!explosion2Texture.loadFromFile("boom.png"));
 	//////Font
 	sf::Font font;
 	if (!font.loadFromFile("The Bugatten.ttf"));
@@ -207,7 +217,7 @@ int main()
 	word4.setFont(font);
 	word4.setPosition(625.f, -40.f);
 	word4.setFillColor(sf::Color::Black);
-	
+
 	///////victory
 	sf::Sprite shapevictory;
 	shapevictory.setTexture(victoryTexture);
@@ -260,8 +270,12 @@ int main()
 	shapespecialbomb.setTexture(specialbombTexture);
 	int bomb2SizeX = specialbombTexture.getSize().x;
 	int bomb2SizeY = specialbombTexture.getSize().y;
-	shapespecialbomb.setScale(sf::Vector2f(0.09f, 0.09f));
+	shapespecialbomb.setScale(sf::Vector2f(0.07f, 0.07f));
 	shapespecialbomb.setTextureRect(sf::IntRect(0, 0, bomb2SizeX, bomb2SizeY));
+	/*time_t t2;
+	srand((unsigned)time(&t2));
+	sf::Vector2f spawnPoint321 = { 100 + float(rand() % 821),100 + float(rand() % 492) };
+	shapespecialbomb.setPosition(spawnPoint321);*/
 	sf::Vector2f spawnPoint321 = {150.f, 340.f };//140
 	shapespecialbomb.setPosition(spawnPoint321);
 	///////grape2
@@ -362,7 +376,7 @@ int main()
 	int banana4SizeY = bananaTexture.getSize().y;
 	shapebanana4.setScale(sf::Vector2f(0.1f, 0.1f));
 	shapebanana4.setTextureRect(sf::IntRect(0, 0, banana4SizeX, banana4SizeY));
-	sf::Vector2f spawnPoint203 = { 722.f,214.5f };//140
+	sf::Vector2f spawnPoint203 = { 730.f,214.5f };//140
 	shapebanana4.setPosition(spawnPoint203);
 	///////banana5
 	sf::Sprite shapebanana5;
@@ -768,6 +782,48 @@ int main()
 	int bombSizeY = bombTexture.getSize().y / 8;
 	shapeBomb.setScale(sf::Vector2f(0.15f, 0.15f));
 	shapeBomb.setTextureRect(sf::IntRect(0, 0, bombSizeX, bombSizeY));
+	///////fire
+	sf::Sprite shapefire;
+	shapefire.setTexture(fireTexture);
+	int fireSizeX = fireTexture.getSize().x;
+	int fireSizeY = fireTexture.getSize().y;
+	shapefire.setScale(sf::Vector2f(0.2f, 0.2f));
+	shapefire.setTextureRect(sf::IntRect(0, 0, fireSizeX, fireSizeY));
+	time_t t4;
+	srand((unsigned)time(&t4));
+	sf::Vector2f spawnPoint226 = { 100 + float(rand() % 821),100 + float(rand() % 492) };
+	shapefire.setPosition(spawnPoint226);
+	/*sf::Vector2f spawnPoint226 = { 265.f,235.f };
+	shapefire.setPosition(spawnPoint226);*/
+	//fixfire
+	///////fireeffection
+	int f2SizeX = fireeffectTexture.getSize().x / 4.3;
+	int f2SizeY = fireeffectTexture.getSize().y ;
+	sf::Sprite shapefireeffect;
+	sf::IntRect rectfire(0, 0, f2SizeX, f2SizeY);
+	shapefireeffect.setTextureRect(sf::IntRect(0, 0, f2SizeX, f2SizeY));
+	shapefireeffect.setScale(sf::Vector2f(1.18f, 0.7f));
+	shapefireeffect.setTexture(fireeffectTexture);
+	sf::Vector2f spawnPoint450 = { 3900.f, 295.f };
+	shapefireeffect.setPosition(spawnPoint450);;
+
+	
+	//specialbomb maimoke
+	sf::Sprite specialBombSprite;
+	specialBombSprite.setTexture(specialbombTexture);
+	specialBombSprite.setScale(0.07f,0.07f);
+	specialBombSprite.setPosition(-1200.f, -1100.f);
+	
+	//specialexplosion
+	sf::Sprite specialExplosion;
+	specialExplosion.setTexture(explosion2Texture);
+	specialExplosion.setPosition(-1000.f, -1000.f);
+	float specialExplosionSizeX=  130.8f;//change
+	float specialExplosionSizeY= 127.3f;//change
+	specialExplosion.setTextureRect(sf::IntRect(0,0,specialExplosionSizeX,specialExplosionSizeY));
+	int SpecialExplosionFrame=0;
+	float SpecialExplosionTime = 0;
+	float bombtime = INT_MAX;
 
 	sf::Vector2f spawnPoint2 = { 10000.f, 1024.4f };
 	shapeBomb.setPosition(spawnPoint2);
@@ -796,6 +852,7 @@ int main()
 	sf::Clock monsterClock2;
 	sf::Clock monsterClock3;
 	sf::Clock deltaClock;
+	sf::Clock fireClock;
 	sf::Time DeltaTime;
 	float time_interval = 0;
 	float time_interval2 = 0;
@@ -807,6 +864,7 @@ int main()
 	sf::Sprite temp;
 	sf::Sprite temp2;
 	sf::Sprite temp3;
+	sf::Sprite temp4;
 
 	bool bomb = 0;
 	int explosion = 0;
@@ -816,6 +874,9 @@ int main()
 	bool monster = 1;
 	bool monster2 = 1;
 	bool monster3 = 1;
+	bool spb = 1;
+	bool spb2 = 1;
+	bool f = 1;
     std::vector<sf::Sprite> bombPlace;
 	std::vector<sf::Sprite> bombPlace2;
 	std::vector<sf::Sprite> explosionPlace;
@@ -843,6 +904,7 @@ int main()
 		word3.setString(std::to_string(grape));
 		word4.setString(std::to_string(time2));
 	//word5.setString(std::to_string(times[5]));
+		window.draw(shapebanana);
 		window.draw(rectangle);
 		window.draw(rectangle2);
 		window.draw(rectangle3);
@@ -871,7 +933,7 @@ int main()
 		window.draw(word);
 		window.draw(word2);
 		window.draw(word3);
-		window.draw(shapebanana);
+	
 		window.draw(shapebanana2);
 		window.draw(shapebanana3);
 		window.draw(shapebanana4);
@@ -922,6 +984,8 @@ int main()
 		window.draw(shapewall29);
 		window.draw(shapewall30);
 		window.draw(shapewall31);
+		window.draw(shapefire);
+		window.draw(shapefireeffect);
 		window.draw(shapeSprite);
 		window.draw(shapebanana6);
 		window.draw(shapemonster);
@@ -934,6 +998,9 @@ int main()
 		//shapeBomb.setPosition(P);
 		window.draw(shapeBomb);
 		window.draw(shapespecialbomb);
+		window.draw(specialBombSprite);
+		window.draw(specialExplosion);
+		
 		for (sf::Sprite sprites : bombPlace)
 
 			window.draw(sprites);
@@ -947,8 +1014,48 @@ int main()
 		window.draw(shapeExplosion);
 		window.draw(shapeexplosion2);
 		window.display();
-		if(health!=0)
+		if(health>0)
 		time2 = time2 + DeltaTime.asSeconds();
+		//fix1
+		if (p == 0) {
+			if (shapespecialbomb.getPosition().x >= 95) {
+				if (spb == 0 || spb == 1) {
+					if (spb == 1) {
+						shapespecialbomb.move(0.8f, 0.f);
+						if (shapespecialbomb.getPosition().x >= 900) {
+							spb = 0;
+						}
+					}
+					if (spb == 0) {
+						shapespecialbomb.move(-0.8f, 0.f);
+						if (shapespecialbomb.getPosition().x <= 100) {
+							spb = 1;
+						}
+					}
+				}
+
+			}
+		}
+		//fix2
+		if (p == 0) {
+			if (shapefire.getPosition().y >= 100) {
+				if (spb2 == 0 || spb2 == 1) {
+					if (spb2 == 1) {
+						shapefire.move(0.f, 0.8f);
+						if (shapefire.getPosition().y >= 570) {
+							spb2 = 0;
+						}
+					}
+					if (spb2 == 0) {
+						shapefire.move(0.f, -0.8f);
+						if (shapefire.getPosition().y<= 105) {
+							spb2 = 1;
+						}
+					}
+				}
+
+			}
+		}
 		if (p == 0) {
 			if (shapemonster3.getPosition().y >= 100) {
 
@@ -1140,6 +1247,27 @@ int main()
 			//shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, 60));
 			sf::Vector2f spritspawn1 = { x,y };
 		}
+		//fixfire
+		if (fire2 == 1) {
+			rectfire.top = f2SizeY * 0;
+
+			if (fireClock.getElapsedTime().asSeconds() > 0.5f)
+			{
+				if (rectfire.left == (f2SizeX * 1))
+				{
+					rectfire.left = 0;
+				}
+				else
+				{
+					rectfire.left += f2SizeX;
+				}
+				fireClock.restart();
+			}
+			shapefireeffect.setTextureRect(sf::IntRect(rectfire));
+			shapefireeffect.setPosition(shapeSprite.getPosition().x-65.f, shapeSprite.getPosition().y - 65.f);
+			sf::Vector2f spritspawn1 = { x,y };
+			//shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f
+		}
 		if (p == 0) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && shapeSprite.getPosition().x < 1080 - spriteSizeX - 100)
 			{
@@ -1160,6 +1288,7 @@ int main()
 					}
 					shapeSprite.setTextureRect(sf::IntRect(rectPlayer2));
 				}
+				
 				rectPlayer.top = spriteSizeY;
 				shapeSprite.move(0.7f, 0.f);
 				if (playerClock.getElapsedTime().asSeconds() > 0.3f)
@@ -1925,6 +2054,7 @@ int main()
 				}
 			}
 		}
+
 		if (p == 0) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && shapeSprite.getPosition().y < 720 - spriteSizeY - 65)
 
@@ -2090,214 +2220,190 @@ int main()
 				if (rectangle.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 
 					shapeSprite.move(0.f, -2.7f);
-					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f);
+					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 5.f);
 					shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
 					sf::Vector2f spritspawn1 = { x,y };
 				}
 				if (rectangle2.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 
 					shapeSprite.move(0.f, -2.7f);
-					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f);
+					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 5.f);
 					shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
 					sf::Vector2f spritspawn1 = { x,y };
 				}
 				if (rectangle3.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 
 					shapeSprite.move(0.f, -2.7f);
-					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f);
+					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 5.f);
 					shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
 					sf::Vector2f spritspawn1 = { x,y };
 				}
 				if (rectangle4.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 
 					shapeSprite.move(0.f, -2.7f);
-					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f);
+					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 5.f);
 					shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
 					sf::Vector2f spritspawn1 = { x,y };
 				}
 				if (rectangle5.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 
 					shapeSprite.move(0.f, -2.7f);
-					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f);
+					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 5.f);
 					shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
 					sf::Vector2f spritspawn1 = { x,y };
 				}
 				if (rectangle6.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 
 					shapeSprite.move(0.f, -2.7f);
-					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f);
+					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 5.f);
 					shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
 					sf::Vector2f spritspawn1 = { x,y };
 				}
 				if (rectangle7.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 
 					shapeSprite.move(0.f, -2.7f);
-					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f);
+					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 5.f);
 					shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
 					sf::Vector2f spritspawn1 = { x,y };
 				}
 				if (rectangle8.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 
 					shapeSprite.move(0.f, -2.7f);
-					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f);
+					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 5.f);
 					shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
 					sf::Vector2f spritspawn1 = { x,y };
 				}
 				if (rectangle9.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 
 					shapeSprite.move(0.f, -2.7f);
-					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f);
+					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 5.f);
 					shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
 					sf::Vector2f spritspawn1 = { x,y };
 				}
 				if (rectangle10.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 
 					shapeSprite.move(0.f, -2.7f);
-					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f);
+					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 5.f);
 					shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
 					sf::Vector2f spritspawn1 = { x,y };
 				}
 				if (rectangle11.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 
 					shapeSprite.move(0.f, -2.7f);
-					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f);
+					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 5.f);
 					shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
 					sf::Vector2f spritspawn1 = { x,y };
 				}
 				if (rectangle12.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 
 					shapeSprite.move(0.f, -2.7f);
-					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f);
+					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 5.f);
 					shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
 					sf::Vector2f spritspawn1 = { x,y };
 				}
 				if (rectangle13.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 
 					shapeSprite.move(0.f, -2.7f);
-					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f);
+					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 5.f);
 					shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
 					sf::Vector2f spritspawn1 = { x,y };
 				}
 				if (rectangle14.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 
 					shapeSprite.move(0.f, -2.7f);
-					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f);
+					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 5.f);
 					shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
 					sf::Vector2f spritspawn1 = { x,y };
 				}
 				if (rectangle15.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 
 					shapeSprite.move(0.f, -2.7f);
-					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f);
+					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 5.f);
 					shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
 					sf::Vector2f spritspawn1 = { x,y };
 				}
 				if (rectangle16.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 
 					shapeSprite.move(0.f, -2.7f);
-					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f);
+					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 5.f);
 					shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
 					sf::Vector2f spritspawn1 = { x,y };
 				}
 				if (rectangle17.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 
 					shapeSprite.move(0.f, -2.7f);
-					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f);
+					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 5.f);
 					shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
 					sf::Vector2f spritspawn1 = { x,y };
 				}
 				if (rectangle18.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 
 					shapeSprite.move(0.f, -2.7f);
-					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f);
+					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 5.f);
 					shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
 					sf::Vector2f spritspawn1 = { x,y };
 				}
 				if (rectangle19.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 
 					shapeSprite.move(0.f, -2.7f);
-					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f);
+					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 5.f);
 					shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
 					sf::Vector2f spritspawn1 = { x,y };
 				}
 				if (rectangle20.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 
 					shapeSprite.move(0.f, -2.7f);
-					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f);
+					shapeSprite.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y - 5.f);
 					shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
 					sf::Vector2f spritspawn1 = { x,y };
 				}
 
 			}
 		}
-		if (specialbomb != 0) {
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && bomb10 == 0&&bomb==0)
-			{
-				temp3.setTexture(specialbombTexture);
-				temp3.setTextureRect(sf::IntRect(0, 0, bomb2SizeX, bomb2SizeY));
-				temp3.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y);
-
-				temp3.setScale(sf::Vector2f(0.09f, 0.09f));
-				clock10.restart();
-
-				bombPlace2.push_back(temp3);//delete bomb//temp3
-				specialbomb--;
-				bomb10 = 1;
-			}
-		}
-		printf("%f %f\n", temp3.getPosition().x,temp3.getPosition().y);
-		time_interval2 = clock10.getElapsedTime().asSeconds();
-			if (time_interval2 > 1.5 && bomb10 == 1) {
-				//int h = 0;
-
-				temp3.setTexture(explosion2Texture);
-				temp3.setTextureRect(sf::IntRect(explosion2SizeX*animationFrame3, explosion2SizeY, explosion2SizeX, explosion2SizeY));
-
-				temp3.setScale(sf::Vector2f(3.6f, 3.6f));
-				temp3.setPosition(temp3.getPosition().x - explosion2SizeX*0.09*3.6*4.5, temp3.getPosition().y -  explosion2SizeY*0.09*3.6*4.5);
-				explosionPlace2.push_back(temp3);
-				explosion2++;
-				//std::cout << 'a';
-				system("cls");
-				/*if (h == 0 && health == 3) 
-
-					shapeblueblock.setPosition(130.f, 0.f);
-					health--;
-				}*/
-				bomb10 = 0;
-				//exploding = 1;
-				if (ex == 0) {
-					rectex.top = explosion2SizeY * 1;
-
-					if (bombclock.getElapsedTime().asSeconds() > 3.f)
-					{
-						if (rectex.left == (explosion2SizeX * 2))
-						{
-							rectex.left = 0;
-						}
-						else
-						{
-							rectex.left += explosion2SizeX;
-						}
-						bombclock.restart();
-					}
-				shapeexplosion2.setTextureRect(sf::IntRect(rectex));
-					//shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, 60));
-					sf::Vector2f spritspawn1= { x,y };
+		//maimoke
+	//	if (jk <= 3 || jk > 0) {
+			
+			if (specialbomb != 0) {
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && bomb10 == 0 && bomb == 0) {
+					specialBombSprite.setPosition(shapeSprite.getPosition());
+					bomb10 = 1;
+					specialbomb--;
+					bombtime = 1;
 				}
-				
 			}
-			
-			if (time_interval2 > 2 && explosion2 > 0) {
-			explosionPlace2[explosion2 - 1].setPosition(NULL - 1000, NULL - 1000);
-			
-			bombPlace2[explosion2 - 1].setPosition(NULL - 1000, NULL - 1000);
-			clock10.restart();
-		//	exploding = 0;
+				if (bombtime <= 0)
+				{
+					specialExplosion.setPosition(specialBombSprite.getPosition().x - specialExplosionSizeX / 2 + spriteSizeX / 2, specialBombSprite.getPosition().y - specialExplosionSizeY / 2 + spriteSizeY / 2);
 
+					specialBombSprite.setPosition(-1000.f, -1000.f);
+					bombtime = INT_MAX;
+					SpecialExplosionFrame = 0;
+				}
+				else bombtime = bombtime - DeltaTime.asSeconds();
+		
+			if (specialBombSprite.getPosition().x == -1000) {
+			specialExplosion.setTextureRect(sf::IntRect(SpecialExplosionFrame * specialExplosionSizeX, specialExplosionSizeY*0, specialExplosionSizeX, specialExplosionSizeY));
+				if (SpecialExplosionTime >= 0.3)
+				{
+					SpecialExplosionFrame++;
+					SpecialExplosionTime = 0;
+				}
+				else 				SpecialExplosionTime += DeltaTime.asSeconds();
 			}
+			if (SpecialExplosionFrame == 5)
+			{
+				bomb10 = 0;
+				SpecialExplosionFrame = 999;
+				specialExplosion.setPosition(-1000.f, -1000.f);
+			}
+			
+		
+				
+			
+			
+		//if (jk == 0) {
 			if (specialbomb == 0) {
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && bomb == 0&&bomb10==0)
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && bomb == 0 && bomb10 == 0)
 				{
 					temp.setTexture(bombTexture);
 					temp.setTextureRect(sf::IntRect(bombSizeX * animationFrame2, 0, bombSizeX, bombSizeY));
@@ -2310,16 +2416,16 @@ int main()
 
 					bomb = 1;
 				}
-			}
+		//	}
 			time_interval = time.getElapsedTime().asSeconds();
 			if (time_interval > 1.5 && bomb == 1) {
 				int h = 0;
 
 				temp.setTexture(explosionTexture);
 				temp.setTextureRect(sf::IntRect(explosionSizeX * animationFrame3, 0, explosionSizeX, explosionSizeY));
-				temp.setPosition(temp.getPosition().x - 80.f, temp.getPosition().y - 50.f);
+				temp.setPosition(temp.getPosition().x - 60.f, temp.getPosition().y - 50.f);
 
-				temp.setScale(sf::Vector2f(0.3f, 0.3f));
+				temp.setScale(sf::Vector2f(0.25f, 0.25f));
 
 				explosionPlace.push_back(temp);
 				bomb = 0;
@@ -2337,7 +2443,7 @@ int main()
 				bombPlace[explosion - 1].setPosition(NULL - 1000, NULL - 1000);
 				clock.restart();
 			}
-		
+		}
 		
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 		{
@@ -2345,6 +2451,7 @@ int main()
 		}
 		animationFrame++;
 		animationFrame2++;
+		
 
 		if (animationFrame >= 2) {
 			animationFrame = 0;
@@ -2355,6 +2462,114 @@ int main()
 		if (animationFrame3 >= 2) {
 			animationFrame3= 0;
 		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall.getGlobalBounds())) {
+			shapewall.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall2.getGlobalBounds())) {
+			shapewall2.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall3.getGlobalBounds())) {
+			shapewall3.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall4.getGlobalBounds())) {
+			shapewall4.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall5.getGlobalBounds())) {
+			shapewall5.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall6.getGlobalBounds())) {
+			shapewall6.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall7.getGlobalBounds())) {
+			shapewall7.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall8.getGlobalBounds())) {
+			shapewall8.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall9.getGlobalBounds())) {
+			shapewall9.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall10.getGlobalBounds())) {
+			shapewall10.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall11.getGlobalBounds())) {
+			shapewall11.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall12.getGlobalBounds())) {
+			shapewall12.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall13.getGlobalBounds())) {
+			shapewall13.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall14.getGlobalBounds())) {
+			shapewall14.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall15.getGlobalBounds())) {
+			shapewall15.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall16.getGlobalBounds())) {
+			shapewall16.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall17.getGlobalBounds())) {
+			shapewall17.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall18.getGlobalBounds())) {
+			shapewall18.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall19.getGlobalBounds())) {
+			shapewall19.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall20.getGlobalBounds())) {
+			shapewall20.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall21.getGlobalBounds())) {
+			shapewall21.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall22.getGlobalBounds())) {
+			shapewall22.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall23.getGlobalBounds())) {
+			shapewall23.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall24.getGlobalBounds())) {
+			shapewall24.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall25.getGlobalBounds())) {
+			shapewall25.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall26.getGlobalBounds())) {
+			shapewall26.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall27.getGlobalBounds())) {
+			shapewall27.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall28.getGlobalBounds())) {
+			shapewall28.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall29.getGlobalBounds())) {
+			shapewall29.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall30.getGlobalBounds())) {
+			shapewall30.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapewall31.getGlobalBounds())) {
+			shapewall31.setPosition(10000.f, 10000.f);
+		}
+	
+	if (specialExplosion.getGlobalBounds().intersects(shapemonster.getGlobalBounds())) {
+
+		shapemonster.setPosition(10000.f, 10000.f);
+	}
+	if (specialExplosion.getGlobalBounds().intersects(shapemonster2.getGlobalBounds())) {
+
+		shapemonster2.setPosition(10000.f, 10000.f);
+	}
+	//gm2
+	if (specialExplosion.getGlobalBounds().intersects(shapemonster3.getGlobalBounds())) {
+
+
+		shapemonster3.setPosition(10000.f, 10000.f);
+	}
 		for (int i = 0; i <= explosion - 1; i++) {
 			if (explosionPlace[i].getGlobalBounds().intersects(shapewall.getGlobalBounds())) {
 				shapewall.setPosition(10000.f, 10000.f);
@@ -2450,13 +2665,17 @@ int main()
 				shapewall31.setPosition(10000.f, 10000.f);
 			}
 			if (explosionPlace[i].getGlobalBounds().intersects(shapemonster.getGlobalBounds())) {
+				
 				shapemonster.setPosition(10000.f, 10000.f);
 			}
 				if (explosionPlace[i].getGlobalBounds().intersects(shapemonster2.getGlobalBounds())) {
+					
 					shapemonster2.setPosition(10000.f, 10000.f);
 				}
-			
+			//gm
 			if (explosionPlace[i].getGlobalBounds().intersects(shapemonster3.getGlobalBounds())) {
+				
+			
 				shapemonster3.setPosition(10000.f, 10000.f);
 			}
 			if (i>0.7) {
@@ -2477,11 +2696,28 @@ int main()
 			}
 			
 		}
+		if (shapefireeffect.getGlobalBounds().intersects(shapemonster.getGlobalBounds()))
+	    {
+			shapemonster.setPosition(-1000.f, -1000.f);
+		}
+		if (shapefireeffect.getGlobalBounds().intersects(shapemonster2.getGlobalBounds()))
+		{
+			shapemonster2.setPosition(-1000.f, -1000.f);
+		}
+		if (shapefireeffect.getGlobalBounds().intersects(shapemonster3.getGlobalBounds()))
+		{
+			shapemonster3.setPosition(-1000.f, -1000.f);
+		}
 		
-		if (circle.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())&&apple+banana+grape==26&&health!=0) {
+	
+		//25
+		
+		if (circle.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())&&apple+banana+grape>=25&&health!=-1) {
 			//shapeSprite.setPosition(spawnPoint);
 			invincible = 0;
 			p = 1;
+			health =1;//new health
+			//shapelose.setPosition(2500.f, 7000.f);
 			shapevictory.setPosition(250.f,70.f);
 			invincible=invincible-0.1;
 			if (invincible <= -2) {
@@ -2491,6 +2727,11 @@ int main()
 		if (shapespecialbomb.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 			shapespecialbomb.setPosition(1700.f, 1700.f);
 			specialbomb = 3;
+			jk = 3;
+		}
+		if (shapefire.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
+			shapefire.setPosition(1700.f, 1700.f);
+			fire2 = 1;
 		}
 		if (shapebanana.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 			banana++;
