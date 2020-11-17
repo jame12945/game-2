@@ -6,7 +6,7 @@
 #include<conio.h>
 #include<time.h>
 using namespace sf;
-int p=0;
+int p = 0;
 int jk = 0;
 float x, y;
 int c = 0, v, b, n = 0;
@@ -17,16 +17,21 @@ int apple = 0;
 int grape = 0;
 int k = 0;
 float invincible = 0;
+float invinciblemon = 0;
+float invinciblemon2 = 0;
+float invinciblemon3 = 0;
 float time2 = 0;
 char times[5] = "Time";
-int specialbomb =0;
+int specialbomb = 0;
 bool bomb10 = 0;
 int fire = 0;
 bool fire2 = 0;
 int exploding = 0;
 int mv = 0;
 int monsterheart = 3;
-int j,j2,j3;
+int monsterheart2 = 3;
+int monsterheart3= 3;
+int j, j2, j3;
 bool monsterheartbool = 0;
 /*int time10() {
 	int i;
@@ -173,7 +178,7 @@ int main()
 	if (!grapeTexture.loadFromFile("grape.png"));
 	//////Texture victory
 	sf::Texture victoryTexture;
-	if (!victoryTexture.loadFromFile("victory.png"));
+	if (!victoryTexture.loadFromFile("9gag.jpg"));
 	//////Texture lose
 	sf::Texture loseTexture;
 	if (!loseTexture.loadFromFile("lose.png"));
@@ -185,7 +190,7 @@ int main()
 	if (!fireTexture.loadFromFile("firesheild.png"));
 	//////Texture fireeffect
 	sf::Texture fireeffectTexture;
-	if (!fireeffectTexture.loadFromFile("fire2.1.png"));
+	if (!fireeffectTexture.loadFromFile("fire2.1111.png"));
 	//////Texture lose
 	sf::Texture timerTexture;
 	if (!timerTexture.loadFromFile("timer.png"));
@@ -235,7 +240,7 @@ int main()
 	shapevictory.setTexture(victoryTexture);
 	int victorySizeX = victoryTexture.getSize().x;
 	int victorySizeY = victoryTexture.getSize().y;
-	shapevictory.setScale(sf::Vector2f(1.0f, 1.0f));
+	shapevictory.setScale(sf::Vector2f(2.38f, 2.16f));
 	shapevictory.setTextureRect(sf::IntRect(0, 0, victorySizeX, victorySizeY));
 	sf::Vector2f spawnPoint216 = { 2500.f,7000.f };//140
 	shapevictory.setPosition(spawnPoint216);
@@ -258,13 +263,13 @@ int main()
 	sf::Vector2f spawnPoint300 = { 430.f, 0.f };//140
 	shapegrape.setPosition(spawnPoint300);
 	///////explosion2
-	
-	int explosion2SizeX = explosion2Texture.getSize().x/3;
-	int explosion2SizeY = explosion2Texture.getSize().y/2;
+
+	int explosion2SizeX = explosion2Texture.getSize().x / 3;
+	int explosion2SizeY = explosion2Texture.getSize().y / 2;
 	sf::Sprite shapeexplosion2;
 	sf::IntRect rectex(explosion2SizeX, 0, explosion2SizeX, explosion2SizeY);
 	shapeexplosion2.setTexture(explosion2Texture);
-	shapeexplosion2.setScale(sf::Vector2f(3.6f,3.6f));
+	shapeexplosion2.setScale(sf::Vector2f(3.6f, 3.6f));
 	//shapeexplosion2.setTextureRect(sf::IntRect(0, 0, explosion2SizeX,explosion2SizeY));
 	sf::Vector2f spawnPoint340 = { 5300.f, 3000.f };//140
 	shapeexplosion2.setPosition(spawnPoint340);
@@ -289,7 +294,7 @@ int main()
 	srand((unsigned)time(&t5));
 	sf::Vector2f spawnPoint321 = { 100 + float(rand() % 821),100 + float(rand() % 492) };
 	shapespecialbomb.setPosition(spawnPoint321);*/
-	sf::Vector2f spawnPoint321 = {150.f, 340.f };//140
+	sf::Vector2f spawnPoint321 = { 150.f, 340.f };//140
 	shapespecialbomb.setPosition(spawnPoint321);
 	///////grape2
 	sf::Sprite shapegrape2;
@@ -355,14 +360,14 @@ int main()
 	shapebanana.setTextureRect(sf::IntRect(0, 0, bananaSizeX, bananaSizeY));
 	int bananax = 1, bananay = 1;
 	time_t t;
-	
-	
-		srand((unsigned)time(&t));
-		
-	
-		//y=492
-		//x=821
-	sf::Vector2f spawnPoint200 = { 100+float(rand()% 821),100+float(rand()%492)};//140
+
+
+	srand((unsigned)time(&t));
+
+
+	//y=492
+	//x=821
+	sf::Vector2f spawnPoint200 = { 100 + float(rand() % 821),100 + float(rand() % 492) };//140
 	shapebanana.setPosition(spawnPoint200);
 	///////banana2
 	sf::Sprite shapebanana2;
@@ -443,7 +448,7 @@ int main()
 	int heartSizeX = heartTexture.getSize().x;
 	int heartSizeY = heartTexture.getSize().y;
 	shapeheart.setScale(sf::Vector2f(0.3f, 0.3f));
-	shapeheart.setTextureRect(sf::IntRect(0, 0, heartSizeX,heartSizeY));
+	shapeheart.setTextureRect(sf::IntRect(0, 0, heartSizeX, heartSizeY));
 	sf::Vector2f spawnPoint103 = { 30.f, 0.f };
 	shapeheart.setPosition(spawnPoint103);
 
@@ -810,8 +815,8 @@ int main()
 	shapefire.setPosition(spawnPoint226);*/
 	//fixfire
 	///////fireeffection
-	int f2SizeX = fireeffectTexture.getSize().x / 4.3;
-	int f2SizeY = fireeffectTexture.getSize().y ;
+	int f2SizeX = fireeffectTexture.getSize().x / 2;
+	int f2SizeY = fireeffectTexture.getSize().y;
 	sf::Sprite shapefireeffect;
 	sf::IntRect rectfire(0, 0, f2SizeX, f2SizeY);
 	shapefireeffect.setTextureRect(sf::IntRect(0, 0, f2SizeX, f2SizeY));
@@ -820,21 +825,21 @@ int main()
 	sf::Vector2f spawnPoint450 = { 3900.f, 295.f };
 	shapefireeffect.setPosition(spawnPoint450);;
 
-	
+
 	//specialbomb maimoke
 	sf::Sprite specialBombSprite;
 	specialBombSprite.setTexture(specialbombTexture);
-	specialBombSprite.setScale(0.07f,0.07f);
+	specialBombSprite.setScale(0.07f, 0.07f);
 	specialBombSprite.setPosition(-1200.f, -1100.f);
-	
+
 	//specialexplosion
 	sf::Sprite specialExplosion;
 	specialExplosion.setTexture(explosion2Texture);
 	specialExplosion.setPosition(-1000.f, -1000.f);
-	float specialExplosionSizeX=  130.8f;//change
-	float specialExplosionSizeY= 127.3f;//change
-	specialExplosion.setTextureRect(sf::IntRect(0,0,specialExplosionSizeX,specialExplosionSizeY));
-	int SpecialExplosionFrame=0;
+	float specialExplosionSizeX = 130.8f;//change
+	float specialExplosionSizeY = 127.3f;//change
+	specialExplosion.setTextureRect(sf::IntRect(0, 0, specialExplosionSizeX, specialExplosionSizeY));
+	int SpecialExplosionFrame = 0;
 	float SpecialExplosionTime = 0;
 	float bombtime = INT_MAX;
 
@@ -890,7 +895,7 @@ int main()
 	bool spb = 1;
 	bool spb2 = 1;
 	bool f = 1;
-    std::vector<sf::Sprite> bombPlace;
+	std::vector<sf::Sprite> bombPlace;
 	std::vector<sf::Sprite> bombPlace2;
 	std::vector<sf::Sprite> explosionPlace;
 	std::vector<sf::Sprite> explosionPlace2;
@@ -898,7 +903,7 @@ int main()
 
 	while (window.isOpen())
 	{
-		
+
 		//printf("Position X=%f Y=%f\n\n", shapeSprite.getPosition().x, shapeSprite.getPosition().y);
 		sf::Event event;
 		bt = time.getElapsedTime().asMilliseconds();
@@ -911,12 +916,12 @@ int main()
 		at4 = time.getElapsedTime().asMilliseconds();
 		DeltaTime = deltaClock.restart();
 		//window.draw(rectangle);//dont forget na use
-	
+
 		word.setString(std::to_string(banana));//important string
-		word2.setString(std::to_string(apple)); 
+		word2.setString(std::to_string(apple));
 		word3.setString(std::to_string(grape));
 		word4.setString(std::to_string(time2));
-	//word5.setString(std::to_string(times[5]));
+		//word5.setString(std::to_string(times[5]));
 		window.draw(shapebanana);
 		window.draw(rectangle);
 		window.draw(rectangle2);
@@ -946,7 +951,7 @@ int main()
 		window.draw(word);
 		window.draw(word2);
 		window.draw(word3);
-	
+
 		window.draw(shapebanana2);
 		window.draw(shapebanana3);
 		window.draw(shapebanana4);
@@ -1005,7 +1010,7 @@ int main()
 		window.draw(shapemonster2);
 		window.draw(shapemonster3);
 		window.draw(shapetimer);
-		window.draw(shapevictory);
+	
 		window.draw(shapelose);
 		//sf::Vector2f P = shapeSprite.getPosition();
 		//shapeBomb.setPosition(P);
@@ -1013,6 +1018,7 @@ int main()
 		window.draw(shapespecialbomb);
 		window.draw(specialBombSprite);
 		window.draw(specialExplosion);
+		window.draw(shapevictory);
 		for (sf::Sprite sprites : bombPlace)
 
 			window.draw(sprites);
@@ -1032,23 +1038,23 @@ int main()
 			shapeenermyheart.setPosition(shapemonster.getPosition().x + (20 * j), shapemonster.getPosition().y - 20.f);
 			window.draw(shapeenermyheart);
 		}
-		for (j = 0; j < monsterheart; j++)
+		for (j2 = 0; j2 < monsterheart2; j2++)
 		{
 			sf::IntRect rectEnemyHeart(0, 0, enermyheartSizeX, enermyheartSizeY);
 			shapeenermyheart.setTexture(enermyheartTexture);
-			shapeenermyheart.setPosition(shapemonster2.getPosition().x + (20 * j), shapemonster2.getPosition().y - 20.f);
+			shapeenermyheart.setPosition(shapemonster2.getPosition().x + (20 * j2), shapemonster2.getPosition().y - 20.f);
 			window.draw(shapeenermyheart);
 		}
-		for (j = 0; j < monsterheart; j++)
+		for (j3 = 0; j3 < monsterheart3; j3++)
 		{
 			sf::IntRect rectEnemyHeart(0, 0, enermyheartSizeX, enermyheartSizeY);
 			shapeenermyheart.setTexture(enermyheartTexture);
-			shapeenermyheart.setPosition(shapemonster3.getPosition().x + (20 * j), shapemonster3.getPosition().y - 20.f);
+			shapeenermyheart.setPosition(shapemonster3.getPosition().x + (20 * j3), shapemonster3.getPosition().y - 20.f);
 			window.draw(shapeenermyheart);
 		}
 		window.display();
-		if(health>0)
-		time2 = time2 + DeltaTime.asSeconds();
+		if (health > 0)
+			time2 = time2 + DeltaTime.asSeconds();
 		//fix1
 		if (p == 0) {
 			if (shapespecialbomb.getPosition().x >= 95) {
@@ -1081,7 +1087,7 @@ int main()
 					}
 					if (spb2 == 0) {
 						shapefire.move(0.f, -0.8f);
-						if (shapefire.getPosition().y<= 105) {
+						if (shapefire.getPosition().y <= 105) {
 							spb2 = 1;
 						}
 					}
@@ -1297,7 +1303,7 @@ int main()
 				fireClock.restart();
 			}
 			shapefireeffect.setTextureRect(sf::IntRect(rectfire));
-			shapefireeffect.setPosition(shapeSprite.getPosition().x-65.f, shapeSprite.getPosition().y - 65.f);
+			shapefireeffect.setPosition(shapeSprite.getPosition().x - 53.f, shapeSprite.getPosition().y - 65.f);
 			sf::Vector2f spritspawn1 = { x,y };
 			//shapeSprite.getPosition().x, shapeSprite.getPosition().y - 10.f
 		}
@@ -1321,7 +1327,7 @@ int main()
 					}
 					shapeSprite.setTextureRect(sf::IntRect(rectPlayer2));
 				}
-				
+
 				rectPlayer.top = spriteSizeY;
 				shapeSprite.move(0.7f, 0.f);
 				if (playerClock.getElapsedTime().asSeconds() > 0.3f)
@@ -2395,61 +2401,62 @@ int main()
 		}
 		//maimoke
 	//	if (jk <= 3 || jk > 0) {
-			
-			if (specialbomb != 0) {
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && bomb10 == 0 && bomb == 0) {
-					specialBombSprite.setPosition(shapeSprite.getPosition());
-					bomb10 = 1;
-					specialbomb--;
-					bombtime = 1;
-				}
-			}
-				if (bombtime <= 0)
-				{
-					specialExplosion.setPosition(specialBombSprite.getPosition().x - specialExplosionSizeX / 2 + spriteSizeX / 2, specialBombSprite.getPosition().y - specialExplosionSizeY / 2 + spriteSizeY / 2);
 
-					specialBombSprite.setPosition(-1000.f, -1000.f);
-					bombtime = INT_MAX;
-					SpecialExplosionFrame = 0;
-				}
-				else bombtime = bombtime - DeltaTime.asSeconds();
-		
-			if (specialBombSprite.getPosition().x == -1000) {
-			specialExplosion.setTextureRect(sf::IntRect(SpecialExplosionFrame * specialExplosionSizeX, specialExplosionSizeY*0, specialExplosionSizeX, specialExplosionSizeY));
-				if (SpecialExplosionTime >= 0.3)
-				{
-					SpecialExplosionFrame++;
-					SpecialExplosionTime = 0;
-				}
-				else 				SpecialExplosionTime += DeltaTime.asSeconds();
+		if (specialbomb != 0) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && bomb10 == 0 && bomb == 0) {
+				specialBombSprite.setPosition(shapeSprite.getPosition());
+				bomb10 = 1;
+				specialbomb--;
+				bombtime = 1;
 			}
-			if (SpecialExplosionFrame == 5)
+		}
+		if (bombtime <= 0)
+		{
+			specialExplosion.setPosition(specialBombSprite.getPosition().x - specialExplosionSizeX / 2 + spriteSizeX / 2, specialBombSprite.getPosition().y - specialExplosionSizeY / 2 + spriteSizeY / 2);
+
+			specialBombSprite.setPosition(-1000.f, -1000.f);
+			bombtime = INT_MAX;
+			SpecialExplosionFrame = 0;
+		}
+		else bombtime = bombtime - DeltaTime.asSeconds();
+
+		if (specialBombSprite.getPosition().x == -1000) {
+			specialExplosion.setTextureRect(sf::IntRect(SpecialExplosionFrame * specialExplosionSizeX, specialExplosionSizeY * 0, specialExplosionSizeX, specialExplosionSizeY));
+			if (SpecialExplosionTime >= 0.3)
 			{
-				bomb10 = 0;
-				SpecialExplosionFrame = 999;
-				specialExplosion.setPosition(-1000.f, -1000.f);
+				SpecialExplosionFrame++;
+				SpecialExplosionTime = 0;
 			}
-			
-		
-				
-			
-			
+			else 				SpecialExplosionTime += DeltaTime.asSeconds();
+		}
+		if (SpecialExplosionFrame == 5)
+		{
+			bomb10 = 0;
+			SpecialExplosionFrame = 999;
+			specialExplosion.setPosition(-1000.f, -1000.f);
+		}
+
+
+
+
+
 		//if (jk == 0) {
-			if (specialbomb == 0) {
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && bomb == 0 && bomb10 == 0)
-				{
-					temp.setTexture(bombTexture);
-					temp.setTextureRect(sf::IntRect(bombSizeX * animationFrame2, 0, bombSizeX, bombSizeY));
-					temp.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y);
+		if (specialbomb == 0) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && bomb == 0 && bomb10 == 0)
+			{
+				temp.setTexture(bombTexture);
+				temp.setTextureRect(sf::IntRect(bombSizeX * animationFrame2, 0, bombSizeX, bombSizeY));
+				temp.setPosition(shapeSprite.getPosition().x, shapeSprite.getPosition().y);
 
-					temp.setScale(sf::Vector2f(0.15f, 0.15f));
-					time.restart();
+				temp.setScale(sf::Vector2f(0.15f, 0.15f));
+				time.restart();
 
-					bombPlace.push_back(temp);//delete bomb
+				bombPlace.push_back(temp);//delete bomb
 
-					bomb = 1;
-				}
-		//	}
+				bomb = 1;
+			}
+		}
+			//	}
 			time_interval = time.getElapsedTime().asSeconds();
 			if (time_interval > 1.5 && bomb == 1) {
 				int h = 0;
@@ -2476,15 +2483,15 @@ int main()
 				bombPlace[explosion - 1].setPosition(NULL - 1000, NULL - 1000);
 				clock.restart();
 			}
-		}
 		
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 		{
 			window.close();
 		}
 		animationFrame++;
 		animationFrame2++;
-		
+
 
 		if (animationFrame >= 2) {
 			animationFrame = 0;
@@ -2493,7 +2500,7 @@ int main()
 			animationFrame2 = 0;
 		}
 		if (animationFrame3 >= 2) {
-			animationFrame3= 0;
+			animationFrame3 = 0;
 		}
 		if (specialExplosion.getGlobalBounds().intersects(shapewall.getGlobalBounds())) {
 			shapewall.setPosition(10000.f, 10000.f);
@@ -2588,21 +2595,21 @@ int main()
 		if (specialExplosion.getGlobalBounds().intersects(shapewall31.getGlobalBounds())) {
 			shapewall31.setPosition(10000.f, 10000.f);
 		}
-	
-	if (specialExplosion.getGlobalBounds().intersects(shapemonster.getGlobalBounds())) {
 
-		shapemonster.setPosition(10000.f, 10000.f);
-	}
-	if (specialExplosion.getGlobalBounds().intersects(shapemonster2.getGlobalBounds())) {
+		if (specialExplosion.getGlobalBounds().intersects(shapemonster.getGlobalBounds())) {
 
-		shapemonster2.setPosition(10000.f, 10000.f);
-	}
-	//gm2
-	if (specialExplosion.getGlobalBounds().intersects(shapemonster3.getGlobalBounds())) {
+			shapemonster.setPosition(10000.f, 10000.f);
+		}
+		if (specialExplosion.getGlobalBounds().intersects(shapemonster2.getGlobalBounds())) {
+
+			shapemonster2.setPosition(10000.f, 10000.f);
+		}
+		//gm2
+		if (specialExplosion.getGlobalBounds().intersects(shapemonster3.getGlobalBounds())) {
 
 
-		shapemonster3.setPosition(10000.f, 10000.f);
-	}
+			shapemonster3.setPosition(10000.f, 10000.f);
+		}
 		for (int i = 0; i <= explosion - 1; i++) {
 			if (explosionPlace[i].getGlobalBounds().intersects(shapewall.getGlobalBounds())) {
 				shapewall.setPosition(10000.f, 10000.f);
@@ -2698,32 +2705,41 @@ int main()
 				shapewall31.setPosition(10000.f, 10000.f);
 			}
 			//gm3
-			if (explosionPlace[i].getGlobalBounds().intersects(shapemonster.getGlobalBounds())) {
+		
+			if (explosionPlace[i].getGlobalBounds().intersects(shapemonster.getGlobalBounds()) && invinciblemon <= 0) {
+				monsterheart--;
+				invinciblemon = 3;
 				
-				shapemonster.setPosition(10000.f, 10000.f);
+				if (monsterheart == 0) {
+					shapemonster.setPosition(10000.f, 10000.f);
+				}
 			}
-			if (!explosionPlace[i].getGlobalBounds().intersects(shapemonster.getGlobalBounds())) monsterheartbool = 1;
-			if (explosionPlace[i].getGlobalBounds().intersects(shapemonster2.getGlobalBounds()) && monsterheartbool == 1) {
+			invinciblemon = invinciblemon - DeltaTime.asSeconds();
+			if (explosionPlace[i].getGlobalBounds().intersects(shapemonster2.getGlobalBounds())  && invinciblemon2 <= 0) {
+				monsterheart2--;
+				invinciblemon2 = 3;
+				if (monsterheart2 == 0) {
+					shapemonster2.setPosition(10000.f, 10000.f);
+				}
 				
-				if (monsterheart == 1) shapemonster2.setPosition(10000.f, 10000.f);
-				else monsterheart--;
-				monsterheartbool = 0;
-				std::cout << i;
 			}
-			
-			if (explosionPlace[i].getGlobalBounds().intersects(shapemonster3.getGlobalBounds())) {
-				
-			
-				shapemonster3.setPosition(10000.f, 10000.f);
+			invinciblemon2 = invinciblemon2 - DeltaTime.asSeconds();
+			if (explosionPlace[i].getGlobalBounds().intersects(shapemonster3.getGlobalBounds()) && invinciblemon3 <= 0) {
+				monsterheart3--;
+				invinciblemon3 = 3;
+				if (monsterheart3 == 0) {
+					shapemonster3.setPosition(10000.f, 10000.f);
+				}
 			}
-			if (i>0.7) {
-				if (explosionPlace[i].getGlobalBounds().intersects(shapeSprite.getGlobalBounds())&&health==2) {
+			invinciblemon3 = invinciblemon3 - DeltaTime.asSeconds();
+			if (i > 0.7) {
+				if (explosionPlace[i].getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) && health == 2) {
 
 					shapeblueblock2.setPosition(80.f, 0.f);
 					health--;
 				}
 			}
-			if (i >1) {
+			if (i > 1) {
 				if (explosionPlace[i].getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) && health == 1) {
 
 					//shapeblueblock2.setPosition(100.f, 0.f);
@@ -2732,10 +2748,10 @@ int main()
 					//death
 				}
 			}
-			
+
 		}
 		if (shapefireeffect.getGlobalBounds().intersects(shapemonster.getGlobalBounds()))
-	    {
+		{
 			shapemonster.setPosition(-1000.f, -1000.f);
 		}
 		if (shapefireeffect.getGlobalBounds().intersects(shapemonster2.getGlobalBounds()))
@@ -2746,18 +2762,18 @@ int main()
 		{
 			shapemonster3.setPosition(-1000.f, -1000.f);
 		}
-		
-	
+
+
 		//25
-		
-		if (circle.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())&&apple+banana+grape>=25&&health!=-1) {
+
+		if (circle.getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) && apple + banana + grape >= 25 && health != -1) {
 			//shapeSprite.setPosition(spawnPoint);
 			invincible = 0;
 			p = 1;
-			health =1;//new health
+			health = 1;//new health
 			//shapelose.setPosition(2500.f, 7000.f);
-			shapevictory.setPosition(250.f,70.f);
-			invincible=invincible-0.1;
+			shapevictory.setPosition(0.f, 0.f);
+			invincible = invincible - 0.1;
 			if (invincible <= -2) {
 				window.close();
 			}
@@ -2773,7 +2789,7 @@ int main()
 		}
 		if (shapebanana.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 			banana++;
-			shapebanana.setPosition(1700.f,1700.f);
+			shapebanana.setPosition(1700.f, 1700.f);
 		}
 		if (shapebanana2.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 			banana++;
@@ -2792,9 +2808,9 @@ int main()
 			banana++;
 			shapebanana5.setPosition(1700.f, 1700.f);
 		}
-		
+
 		if (shapeapple2.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
-			apple=apple+3;
+			apple = apple + 3;
 			shapeapple2.setPosition(1700.f, 1700.f);
 		}
 		if (shapeapple4.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
@@ -2806,7 +2822,7 @@ int main()
 			shapeapple5.setPosition(1700.f, 1700.f);
 		}
 		if (shapegrape2.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
-			grape= grape + 6;
+			grape = grape + 6;
 			shapegrape2.setPosition(1700.f, 1700.f);
 		}
 		if (shapegrape3.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
@@ -2816,23 +2832,23 @@ int main()
 		if ((shapemonster.getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) ||
 			shapemonster2.getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) ||
 			shapemonster3.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())
-			)&&invincible<=0
+			) && invincible <= 0
 			)
-			{
+		{
 			health--;
 			invincible = 3.0;
 			shapeSprite.setPosition(spawnPoint);
-			}
+		}
 		invincible = invincible - DeltaTime.asSeconds();
 		//heart update
-		shapeheart.setTextureRect(sf::IntRect(0, 0, health* heartSizeX / 3, heartSizeY));
-	
+		shapeheart.setTextureRect(sf::IntRect(0, 0, health * heartSizeX / 3, heartSizeY));
+
 		if (health == 0)
 		{
 			p = 1;
 			window.draw(shapelose);
 			shapelose.setPosition(290.f, 100.f);
-			
+
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 			window.close();
