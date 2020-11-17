@@ -289,13 +289,13 @@ int main()
 	int bomb2SizeY = specialbombTexture.getSize().y;
 	shapespecialbomb.setScale(sf::Vector2f(0.07f, 0.07f));
 	shapespecialbomb.setTextureRect(sf::IntRect(0, 0, bomb2SizeX, bomb2SizeY));
-	/*time_t t5;
-	t5 = t5 +30.f;
+	time_t t5;
+	
 	srand((unsigned)time(&t5));
 	sf::Vector2f spawnPoint321 = { 100 + float(rand() % 821),100 + float(rand() % 492) };
-	shapespecialbomb.setPosition(spawnPoint321);*/
-	sf::Vector2f spawnPoint321 = { 150.f, 340.f };//140
 	shapespecialbomb.setPosition(spawnPoint321);
+	//sf::Vector2f spawnPoint321 = { 150.f, 340.f };//140
+	//shapespecialbomb.setPosition(spawnPoint321);
 	///////grape2
 	sf::Sprite shapegrape2;
 	shapegrape2.setTexture(grapeTexture);
