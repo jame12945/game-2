@@ -25,6 +25,9 @@ int fire = 0;
 bool fire2 = 0;
 int exploding = 0;
 int mv = 0;
+int monsterheart = 3;
+int j,j2,j3;
+bool monsterheartbool = 0;
 /*int time10() {
 	int i;
 	for (i = 1; i <= 10; i++);
@@ -189,6 +192,9 @@ int main()
 	//////Texture explosion2
 	sf::Texture explosion2Texture;
 	if (!explosion2Texture.loadFromFile("boom.png"));
+	//////Texture enermyheart
+	sf::Texture enermyheartTexture;
+	if (!enermyheartTexture.loadFromFile("heart4.png"));
 	//////Font
 	sf::Font font;
 	if (!font.loadFromFile("The Bugatten.ttf"));
@@ -217,7 +223,13 @@ int main()
 	word4.setFont(font);
 	word4.setPosition(625.f, -40.f);
 	word4.setFillColor(sf::Color::Black);
-
+	///////enermyheart
+	int enermyheartSizeX = enermyheartTexture.getSize().x;
+	int enermyheartSizeY = enermyheartTexture.getSize().y;
+	sf::Sprite shapeenermyheart(enermyheartTexture);
+	shapeenermyheart.setScale(0.08f, 0.08f);
+	//sf::Vector2f spawnPoint227 = { 290.f,400.f };//290,100
+	//shapeenermyheart.setPosition(spawnPoint227);
 	///////victory
 	sf::Sprite shapevictory;
 	shapevictory.setTexture(victoryTexture);
@@ -272,8 +284,9 @@ int main()
 	int bomb2SizeY = specialbombTexture.getSize().y;
 	shapespecialbomb.setScale(sf::Vector2f(0.07f, 0.07f));
 	shapespecialbomb.setTextureRect(sf::IntRect(0, 0, bomb2SizeX, bomb2SizeY));
-	/*time_t t2;
-	srand((unsigned)time(&t2));
+	/*time_t t5;
+	t5 = t5 +30.f;
+	srand((unsigned)time(&t5));
 	sf::Vector2f spawnPoint321 = { 100 + float(rand() % 821),100 + float(rand() % 492) };
 	shapespecialbomb.setPosition(spawnPoint321);*/
 	sf::Vector2f spawnPoint321 = {150.f, 340.f };//140
@@ -886,7 +899,7 @@ int main()
 	while (window.isOpen())
 	{
 		
-		printf("Position X=%f Y=%f\n\n", shapeSprite.getPosition().x, shapeSprite.getPosition().y);
+		//printf("Position X=%f Y=%f\n\n", shapeSprite.getPosition().x, shapeSprite.getPosition().y);
 		sf::Event event;
 		bt = time.getElapsedTime().asMilliseconds();
 		bt2 = time.getElapsedTime().asMilliseconds();
@@ -1000,7 +1013,6 @@ int main()
 		window.draw(shapespecialbomb);
 		window.draw(specialBombSprite);
 		window.draw(specialExplosion);
-		
 		for (sf::Sprite sprites : bombPlace)
 
 			window.draw(sprites);
@@ -1013,6 +1025,27 @@ int main()
 			window.draw(bomb2);
 		window.draw(shapeExplosion);
 		window.draw(shapeexplosion2);
+		for (j = 0; j < monsterheart; j++)
+		{
+			sf::IntRect rectEnemyHeart(0, 0, enermyheartSizeX, enermyheartSizeY);
+			shapeenermyheart.setTexture(enermyheartTexture);
+			shapeenermyheart.setPosition(shapemonster.getPosition().x + (20 * j), shapemonster.getPosition().y - 20.f);
+			window.draw(shapeenermyheart);
+		}
+		for (j = 0; j < monsterheart; j++)
+		{
+			sf::IntRect rectEnemyHeart(0, 0, enermyheartSizeX, enermyheartSizeY);
+			shapeenermyheart.setTexture(enermyheartTexture);
+			shapeenermyheart.setPosition(shapemonster2.getPosition().x + (20 * j), shapemonster2.getPosition().y - 20.f);
+			window.draw(shapeenermyheart);
+		}
+		for (j = 0; j < monsterheart; j++)
+		{
+			sf::IntRect rectEnemyHeart(0, 0, enermyheartSizeX, enermyheartSizeY);
+			shapeenermyheart.setTexture(enermyheartTexture);
+			shapeenermyheart.setPosition(shapemonster3.getPosition().x + (20 * j), shapemonster3.getPosition().y - 20.f);
+			window.draw(shapeenermyheart);
+		}
 		window.display();
 		if(health>0)
 		time2 = time2 + DeltaTime.asSeconds();
@@ -2664,15 +2697,20 @@ int main()
 			if (explosionPlace[i].getGlobalBounds().intersects(shapewall31.getGlobalBounds())) {
 				shapewall31.setPosition(10000.f, 10000.f);
 			}
+			//gm3
 			if (explosionPlace[i].getGlobalBounds().intersects(shapemonster.getGlobalBounds())) {
 				
 				shapemonster.setPosition(10000.f, 10000.f);
 			}
-				if (explosionPlace[i].getGlobalBounds().intersects(shapemonster2.getGlobalBounds())) {
-					
-					shapemonster2.setPosition(10000.f, 10000.f);
-				}
-			//gm
+			if (!explosionPlace[i].getGlobalBounds().intersects(shapemonster.getGlobalBounds())) monsterheartbool = 1;
+			if (explosionPlace[i].getGlobalBounds().intersects(shapemonster2.getGlobalBounds()) && monsterheartbool == 1) {
+				
+				if (monsterheart == 1) shapemonster2.setPosition(10000.f, 10000.f);
+				else monsterheart--;
+				monsterheartbool = 0;
+				std::cout << i;
+			}
+			
 			if (explosionPlace[i].getGlobalBounds().intersects(shapemonster3.getGlobalBounds())) {
 				
 			
@@ -2788,7 +2826,6 @@ int main()
 		invincible = invincible - DeltaTime.asSeconds();
 		//heart update
 		shapeheart.setTextureRect(sf::IntRect(0, 0, health* heartSizeX / 3, heartSizeY));
-		
 	
 		if (health == 0)
 		{
