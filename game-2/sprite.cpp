@@ -33,6 +33,9 @@ int monsterheart2 = 3;
 int monsterheart3= 3;
 int j, j2, j3;
 bool monsterheartbool = 0;
+int fireuse = 2;
+int bombmove = 0;
+int bombloop=1;
 /*int time10() {
 	int i;
 	for (i = 1; i <= 10; i++);
@@ -200,6 +203,8 @@ int main()
 	//////Texture enermyheart
 	sf::Texture enermyheartTexture;
 	if (!enermyheartTexture.loadFromFile("heart4.png"));
+	sf::Texture remoteTexture;
+	if (!remoteTexture.loadFromFile("remote4.png"));
 	//////Font
 	sf::Font font;
 	if (!font.loadFromFile("The Bugatten.ttf"));
@@ -244,6 +249,15 @@ int main()
 	shapevictory.setTextureRect(sf::IntRect(0, 0, victorySizeX, victorySizeY));
 	sf::Vector2f spawnPoint216 = { 2500.f,7000.f };//140
 	shapevictory.setPosition(spawnPoint216);
+	///////remote jamao
+	sf::Sprite shaperemote;
+	shaperemote.setTexture(remoteTexture);
+	int remoteSizeX = remoteTexture.getSize().x;
+	int remoteSizeY = remoteTexture.getSize().y;
+	shaperemote.setScale(sf::Vector2f(0.1f, 0.1f));
+	shaperemote.setTextureRect(sf::IntRect(0, 0, remoteSizeX,remoteSizeY));
+	sf::Vector2f spawnPoint233 = { 250.f,200.f };//140
+	shaperemote.setPosition(spawnPoint233);
 	///////lose
 	sf::Sprite shapelose;
 	shapelose.setTexture(loseTexture);
@@ -1015,6 +1029,7 @@ int main()
 		//sf::Vector2f P = shapeSprite.getPosition();
 		//shapeBomb.setPosition(P);
 		window.draw(shapeBomb);
+		window.draw(shaperemote);
 		window.draw(shapespecialbomb);
 		window.draw(specialBombSprite);
 		window.draw(specialExplosion);
@@ -1309,7 +1324,7 @@ int main()
 		}
 		if (p == 0) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && shapeSprite.getPosition().x < 1080 - spriteSizeX - 100)
-			{
+			{	
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && shapeSprite.getPosition().x < 1080 - spriteSizeX - 100) {
 					rectPlayer2.top = spriteSizeY;
 					shapeSprite.move(1.7f, 0.f);
@@ -1344,6 +1359,7 @@ int main()
 				}
 				shapeSprite.setTextureRect(sf::IntRect(rectPlayer));
 				//spriteSizeX* animationFrame, spriteSizeY * 1, spriteSizeX, spriteSizeY)
+		
 				if (shapewall.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 					shapeSprite.move(-2.7f, 0.f);
 				}
@@ -1563,6 +1579,7 @@ int main()
 		if (p == 0) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && shapeSprite.getPosition().x >= 100)
 			{
+				
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && shapeSprite.getPosition().x >= 100) {
 					rectPlayer2.top = spriteSizeY * 0;
 					shapeSprite.move(-1.7f, 0.f);
@@ -1815,6 +1832,7 @@ int main()
 		if (p == 0) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && shapeSprite.getPosition().y >= 100)
 			{
+			
 				rectPlayer.top = spriteSizeY * 3.05;
 				shapeSprite.move(0.f, -0.7f);
 				if (playerClock.getElapsedTime().asSeconds() > 0.3f)
@@ -2098,6 +2116,7 @@ int main()
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && shapeSprite.getPosition().y < 720 - spriteSizeY - 65)
 
 			{
+			
 				rectPlayer.top = spriteSizeY * 2;
 				shapeSprite.move(0.f, 0.7f);
 				if (playerClock.getElapsedTime().asSeconds() > 0.3f)
@@ -2400,7 +2419,7 @@ int main()
 			}
 		}
 		//maimoke
-	//	if (jk <= 3 || jk > 0) {
+
 
 		if (specialbomb != 0) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && bomb10 == 0 && bomb == 0) {
@@ -2410,7 +2429,7 @@ int main()
 				bombtime = 1;
 			}
 		}
-		if (bombtime <= 0)
+		if (bombtime <= 0 && bombmove==1)
 		{
 			specialExplosion.setPosition(specialBombSprite.getPosition().x - specialExplosionSizeX / 2 + spriteSizeX / 2, specialBombSprite.getPosition().y - specialExplosionSizeY / 2 + spriteSizeY / 2);
 
@@ -2434,12 +2453,15 @@ int main()
 			bomb10 = 0;
 			SpecialExplosionFrame = 999;
 			specialExplosion.setPosition(-1000.f, -1000.f);
+			bombmove--;
+			jk--;
 		}
-
-
-
-
-
+		//jamao.play
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)&&bombmove==0)//Bug
+		{
+				bombmove++;
+		}
+		//Boom
 		//if (jk == 0) {
 		if (specialbomb == 0) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && bomb == 0 && bomb10 == 0)
@@ -2752,17 +2774,22 @@ int main()
 		}
 		if (shapefireeffect.getGlobalBounds().intersects(shapemonster.getGlobalBounds()))
 		{
+			fireuse--;
 			shapemonster.setPosition(-1000.f, -1000.f);
 		}
 		if (shapefireeffect.getGlobalBounds().intersects(shapemonster2.getGlobalBounds()))
 		{
+			fireuse--;
 			shapemonster2.setPosition(-1000.f, -1000.f);
 		}
 		if (shapefireeffect.getGlobalBounds().intersects(shapemonster3.getGlobalBounds()))
 		{
+			fireuse--;
 			shapemonster3.setPosition(-1000.f, -1000.f);
 		}
-
+		if (fireuse == 0) {
+			shapefireeffect.setPosition(-1000.f, -1000.f);
+		}
 
 		//25
 
@@ -2779,9 +2806,16 @@ int main()
 			}
 		}
 		if (shapespecialbomb.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
+			
 			shapespecialbomb.setPosition(1700.f, 1700.f);
 			specialbomb = 3;
 			jk = 3;
+		}
+		if (jk >0) {
+			shaperemote.setPosition(shapeSprite.getPosition().x-5.f, shapeSprite.getPosition().y - 45.f);
+		}
+		if (jk == 0) {
+			shaperemote.setPosition(-1000.f, -1000.f);
 		}
 		if (shapefire.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 			shapefire.setPosition(1700.f, 1700.f);
