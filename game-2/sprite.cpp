@@ -21,7 +21,6 @@ float invinciblemon = 0;
 float invinciblemon2 = 0;
 float invinciblemon3 = 0;
 float time2 = 0;
-char times[5] = "Time";
 int specialbomb = 0;
 bool bomb10 = 0;
 int fire = 0;
@@ -233,6 +232,13 @@ int main()
 	word4.setFont(font);
 	word4.setPosition(625.f, -40.f);
 	word4.setFillColor(sf::Color::Black);
+	///////font5
+	sf::Text word5;
+	word5.setCharacterSize(70.f);
+	word5.setFont(font);
+	word5.setPosition(825.f, -40.f);
+	word5.setFillColor(sf::Color::Black);
+	word5.setString("KUAY");
 	///////enermyheart
 	int enermyheartSizeX = enermyheartTexture.getSize().x;
 	int enermyheartSizeY = enermyheartTexture.getSize().y;
@@ -983,7 +989,7 @@ int main()
 		window.draw(shapeblueblock);
 		window.draw(shapeblueblock2);
 		window.draw(shapeblueblock3);
-		window.draw(word4);
+		//window.draw(word4);
 		//window.draw(word5);
 		window.draw(shapewall);
 		window.draw(shapewall2);
@@ -1033,7 +1039,6 @@ int main()
 		window.draw(shapespecialbomb);
 		window.draw(specialBombSprite);
 		window.draw(specialExplosion);
-		window.draw(shapevictory);
 		for (sf::Sprite sprites : bombPlace)
 
 			window.draw(sprites);
@@ -1067,9 +1072,12 @@ int main()
 			shapeenermyheart.setPosition(shapemonster3.getPosition().x + (20 * j3), shapemonster3.getPosition().y - 20.f);
 			window.draw(shapeenermyheart);
 		}
+		window.draw(shapevictory);
+		window.draw(word5);
+		window.draw(word4);
 		window.display();
-		if (health > 0)
-			time2 = time2 + DeltaTime.asSeconds();
+		if (health > 0&&p==0)
+			time2 = time2 + DeltaTime.asSeconds(); //maimoke1234567890
 		//fix1
 		if (p == 0) {
 			if (shapespecialbomb.getPosition().x >= 95) {
@@ -2793,7 +2801,7 @@ int main()
 
 		//25
 
-		if (circle.getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) && apple + banana + grape >= 25 && health != -1) {
+		if (circle.getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) && apple + banana + grape >= 1&& health != -1) {
 			//shapeSprite.setPosition(spawnPoint);
 			invincible = 0;
 			p = 1;
