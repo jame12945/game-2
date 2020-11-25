@@ -35,6 +35,8 @@ bool monsterheartbool = 0;
 int fireuse = 2;
 int bombmove = 0;
 int bombloop=1;
+int highscore;
+int victoryy = 0;
 /*int time10() {
 	int i;
 	for (i = 1; i <= 10; i++);
@@ -238,7 +240,20 @@ int main()
 	word5.setFont(font);
 	word5.setPosition(825.f, -40.f);
 	word5.setFillColor(sf::Color::Black);
-	word5.setString("KUAY");
+	word5.setString("Jamo");
+	///////font6
+	sf::Text word6;
+	word6.setCharacterSize(100.f);
+	word6.setFont(font);
+	word6.setPosition(525.f, 260.f);
+	word6.setFillColor(sf::Color::Black);
+	///////font7
+	sf::Text word7;
+	word7.setCharacterSize(110.f);
+	word7.setFont(font);
+	word7.setPosition(150.f, 250.f);
+	word7.setFillColor(sf::Color::Black);
+	word7.setString("Your Highscore:");
 	///////enermyheart
 	int enermyheartSizeX = enermyheartTexture.getSize().x;
 	int enermyheartSizeY = enermyheartTexture.getSize().y;
@@ -941,6 +956,7 @@ int main()
 		word2.setString(std::to_string(apple));
 		word3.setString(std::to_string(grape));
 		word4.setString(std::to_string(time2));
+		word6.setString(std::to_string(highscore));
 		//word5.setString(std::to_string(times[5]));
 		window.draw(shapebanana);
 		window.draw(rectangle);
@@ -1072,12 +1088,21 @@ int main()
 			shapeenermyheart.setPosition(shapemonster3.getPosition().x + (20 * j3), shapemonster3.getPosition().y - 20.f);
 			window.draw(shapeenermyheart);
 		}
-		window.draw(shapevictory);
-		window.draw(word5);
 		window.draw(word4);
-		window.display();
+		window.draw(word5);
+		window.draw(shapevictory);
+		if (health > 0 && p == 0) {
+			highscore = time2 * (apple + banana + grape); 
+		}
+		//writrhere
+		if (victoryy >0) {
+			window.draw(word6);
+			window.draw(word7);
+
+		}
 		if (health > 0&&p==0)
 			time2 = time2 + DeltaTime.asSeconds(); //maimoke1234567890
+		window.display();
 		//fix1
 		if (p == 0) {
 			if (shapespecialbomb.getPosition().x >= 95) {
@@ -1263,7 +1288,9 @@ int main()
 					else if (monster == 0) {
 						rectmonster.top = monsterSizeY * 3;
 						shapemonster.move(0.f, -0.45f);
-						if (shapewall4.getGlobalBounds().intersects(shapemonster.getGlobalBounds()) ||
+						if (
+							shapewall3.getGlobalBounds().intersects(shapemonster.getGlobalBounds()) ||
+							shapewall4.getGlobalBounds().intersects(shapemonster.getGlobalBounds()) ||
 							shapemonster.getPosition().y <= 105) {
 							monster = 1;
 						}
@@ -2801,10 +2828,11 @@ int main()
 
 		//25
 
-		if (circle.getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) && apple + banana + grape >= 1&& health != -1) {
+		if (circle.getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) && apple + banana + grape >= 25&& health != -1) {
 			//shapeSprite.setPosition(spawnPoint);
 			invincible = 0;
 			p = 1;
+			victoryy = victoryy + 1;
 			health = 1;//new health
 			//shapelose.setPosition(2500.f, 7000.f);
 			shapevictory.setPosition(0.f, 0.f);
@@ -2813,6 +2841,7 @@ int main()
 				window.close();
 			}
 		}
+		printf("%d", victoryy);
 		if (shapespecialbomb.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 			
 			shapespecialbomb.setPosition(1700.f, 1700.f);
