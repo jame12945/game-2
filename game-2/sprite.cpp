@@ -5,6 +5,7 @@
 #include<windows.h>
 #include<conio.h>
 #include<time.h>
+#include<SFML/Audio.hpp>
 using namespace sf;
 int p = 0;
 int jk = 0;
@@ -37,6 +38,8 @@ int bombmove = 0;
 int bombloop=1;
 int highscore;
 int victoryy = 0;
+int round1 = 0;
+int control=0;
 /*int time10() {
 	int i;
 	for (i = 1; i <= 10; i++);
@@ -48,6 +51,18 @@ int main()
 	char revalue = '.';
 
 	sf::RenderWindow window(sf::VideoMode(1080, 720), "Game from jamo!");
+	//song
+	sf::Music song;
+	song.openFromFile("Battle_-_Critical_Maneuvers.ogg");
+	song.setVolume(20.f);
+	//song2
+	sf::Music song2;
+	song2.openFromFile("victorytym.ogg");
+	song2.setVolume(20.f);
+	
+	 /*if(control == 1) {
+		song2.play();
+	}*/
 
 	////// Circle
 	sf::CircleShape circle(20.f);
@@ -204,6 +219,12 @@ int main()
 	//////Texture enermyheart
 	sf::Texture enermyheartTexture;
 	if (!enermyheartTexture.loadFromFile("heart4.png"));
+	//////Texture menu
+	sf::Texture menuTexture;
+	if (!menuTexture.loadFromFile("menugame.jpg"));
+	/// <summary>
+	/// </summary>
+	/// <returns></returns>
 	sf::Texture remoteTexture;
 	if (!remoteTexture.loadFromFile("remote4.png"));
 	//////Font
@@ -270,6 +291,15 @@ int main()
 	shapevictory.setTextureRect(sf::IntRect(0, 0, victorySizeX, victorySizeY));
 	sf::Vector2f spawnPoint216 = { 2500.f,7000.f };//140
 	shapevictory.setPosition(spawnPoint216);
+	///////menu
+	sf::Sprite shapemenu;
+	shapemenu.setTexture(menuTexture);
+	int menuSizeX = menuTexture.getSize().x;
+	int menuSizeY = menuTexture.getSize().y;
+	shapemenu.setScale(sf::Vector2f(0.58f, 0.62f));
+	shapemenu.setTextureRect(sf::IntRect(0, 0, menuSizeX, menuSizeY));
+	sf::Vector2f spawnPoint716 = { 0.f,0.f };//140
+	shapemenu.setPosition(spawnPoint716);
 	///////remote jamao
 	sf::Sprite shaperemote;
 	shaperemote.setTexture(remoteTexture);
@@ -958,6 +988,7 @@ int main()
 		word4.setString(std::to_string(time2));
 		word6.setString(std::to_string(highscore));
 		//word5.setString(std::to_string(times[5]));
+		
 		window.draw(shapebanana);
 		window.draw(rectangle);
 		window.draw(rectangle2);
@@ -987,7 +1018,6 @@ int main()
 		window.draw(word);
 		window.draw(word2);
 		window.draw(word3);
-
 		window.draw(shapebanana2);
 		window.draw(shapebanana3);
 		window.draw(shapebanana4);
@@ -1100,9 +1130,24 @@ int main()
 			window.draw(word7);
 
 		}
-		if (health > 0&&p==0)
+		if (health > 0 && p == 0)
 			time2 = time2 + DeltaTime.asSeconds(); //maimoke1234567890
+		window.draw(shapemenu);
 		window.display();
+		//get the fuck out off menu
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
+			if (control == 0) {
+				song.play();
+				time2 = 0;
+			}
+			
+			shapemenu.setPosition(-1000.f, -1000.f);
+		}
+		if (control == 1) {
+			song.stop();
+			song2.play();
+		}
+
 		//fix1
 		if (p == 0) {
 			if (shapespecialbomb.getPosition().x >= 95) {
@@ -2828,11 +2873,12 @@ int main()
 
 		//25
 
-		if (circle.getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) && apple + banana + grape >= 25&& health != -1) {
+		if (circle.getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) && apple + banana + grape >= 1&& health != -1) {
 			//shapeSprite.setPosition(spawnPoint);
 			invincible = 0;
 			p = 1;
 			victoryy = victoryy + 1;
+			control =1;
 			health = 1;//new health
 			//shapelose.setPosition(2500.f, 7000.f);
 			shapevictory.setPosition(0.f, 0.f);
@@ -2841,7 +2887,7 @@ int main()
 				window.close();
 			}
 		}
-		printf("%d", victoryy);
+		printf("control=%d\n", control);
 		if (shapespecialbomb.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 			
 			shapespecialbomb.setPosition(1700.f, 1700.f);
@@ -2919,6 +2965,7 @@ int main()
 			p = 1;
 			window.draw(shapelose);
 			shapelose.setPosition(290.f, 100.f);
+			control = 1;
 
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
