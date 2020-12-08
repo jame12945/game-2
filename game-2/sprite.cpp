@@ -32,19 +32,22 @@ int exploding = 0;
 int mv = 0;
 int monsterheart = 3;
 int monsterheart2 = 3;
-int monsterheart3= 3;
+int monsterheart3 = 3;
 int bossheart = 10;
-int j, j2, j3,j4;
+int j, j2, j3, j4;
 bool monsterheartbool = 0;
 int fireuse = 2;
 int bombmove = 0;
-int bombloop=1;
+int bombloop = 1;
 int highscore;
 int victoryy = 0;
 int round1 = 0;
-int control=0;
-bool status=0;
+int control = 0;
+bool status = 0;
 bool posit = 0;
+int tak = 0;
+bool setleaw = 0;
+bool playleaw = 0;
 /*int time10() {
 	int i;
 	for (i = 1; i <= 10; i++);
@@ -65,14 +68,14 @@ int main()
 	song.setVolume(20.f);
 	//song2
 	sf::Music song2;
-	song2.openFromFile("victorytym.ogg");
-	song2.setVolume(20.f);
-	
-	 /*if(control == 1) {
-		song2.play();
-	}*/
+	song2.openFromFile("Airship.ogg");
+	song2.setVolume(40.f);
 
-	////// Circle
+	/*if(control == 1) {
+	   song2.play();
+   }*/
+
+   ////// Circle
 	sf::CircleShape circle(20.f);
 	circle.setPosition({ 900.f, 200.f });
 	circle.setFillColor(sf::Color::Red);
@@ -313,17 +316,17 @@ int main()
 	int menuSizeY = menuTexture.getSize().y;
 	shapemenu.setScale(sf::Vector2f(0.58f, 0.62f));
 	shapemenu.setTextureRect(sf::IntRect(0, 0, menuSizeX, menuSizeY));
-	
-		sf::Vector2f spawnPoint716 = {-10.f,0.f };//140
-		shapemenu.setPosition(spawnPoint716);
-	
+
+	sf::Vector2f spawnPoint716 = { -10.f,0.f };//140
+	shapemenu.setPosition(spawnPoint716);
+
 	///////remote jamao
 	sf::Sprite shaperemote;
 	shaperemote.setTexture(remoteTexture);
 	int remoteSizeX = remoteTexture.getSize().x;
 	int remoteSizeY = remoteTexture.getSize().y;
 	shaperemote.setScale(sf::Vector2f(0.1f, 0.1f));
-	shaperemote.setTextureRect(sf::IntRect(0, 0, remoteSizeX,remoteSizeY));
+	shaperemote.setTextureRect(sf::IntRect(0, 0, remoteSizeX, remoteSizeY));
 	sf::Vector2f spawnPoint233 = { 250.f,200.f };//140
 	shaperemote.setPosition(spawnPoint233);
 	///////lose
@@ -372,7 +375,7 @@ int main()
 	shapespecialbomb.setScale(sf::Vector2f(0.07f, 0.07f));
 	shapespecialbomb.setTextureRect(sf::IntRect(0, 0, bomb2SizeX, bomb2SizeY));
 	time_t t5;
-	
+
 	srand((unsigned)time(&t5));
 	sf::Vector2f spawnPoint321 = { 100 + float(rand() % 821),100 + float(rand() % 492) };
 	shapespecialbomb.setPosition(spawnPoint321);
@@ -535,15 +538,15 @@ int main()
 	shapeheart.setPosition(spawnPoint103);
 
 	//////boss
-	int bossSizeX = bossTexture.getSize().x /5.8;
-	int bossSizeY = bossTexture.getSize().y ;
+	int bossSizeX = bossTexture.getSize().x / 5.8;
+	int bossSizeY = bossTexture.getSize().y;
 	sf::Sprite shapeboss;
 	sf::IntRect rectboss(0, 0, bossSizeX, bossSizeY);
 	shapeboss.setTextureRect(sf::IntRect(0, 0, bossSizeX, bossSizeY));
 	shapeboss.setScale(sf::Vector2f(3.0f, 3.0f));
 	shapeboss.setTexture(bossTexture);
 	sf::Vector2f spawnPoint1001 = { 700.f, 420.f };
-	shapeboss.setPosition(spawnPoint1001);
+	shapeboss.setPosition(NULL,NULL);
 	//////monster
 	int monsterSizeX = monsterTexture.getSize().x / 3;
 	int monsterSizeY = monsterTexture.getSize().y / 4;
@@ -1018,7 +1021,7 @@ int main()
 		word4.setString(std::to_string(time2));
 		word6.setString(std::to_string(highscore));
 		//word5.setString(std::to_string(times[5]));
-		
+
 		window.draw(shapebanana);
 		window.draw(rectangle);
 		window.draw(rectangle2);
@@ -1106,7 +1109,7 @@ int main()
 		window.draw(shapemonster2);
 		window.draw(shapemonster3);
 		window.draw(shapetimer);
-	
+
 		window.draw(shapelose);
 		//sf::Vector2f P = shapeSprite.getPosition();
 		//shapeBomb.setPosition(P);
@@ -1148,31 +1151,38 @@ int main()
 			shapeenermyheart.setPosition(shapemonster3.getPosition().x + (20 * j3), shapemonster3.getPosition().y - 20.f);
 			window.draw(shapeenermyheart);
 		}
+		if (tak==3)
 		for (j4 = 0; j4 < bossheart; j4++)
 		{
 			sf::IntRect rectbossHeart(0, 0, enermyheartSizeX, enermyheartSizeY);
 			shapeenermyheart.setTexture(enermyheartTexture);
-			shapeenermyheart.setPosition(shapeboss.getPosition().x + (20 * j4), shapeboss.getPosition().y +20.f);
+			shapeenermyheart.setPosition(shapeboss.getPosition().x + (20 * j4), shapeboss.getPosition().y + 20.f);
 			window.draw(shapeenermyheart);
 		}
 		window.draw(word4);
 		window.draw(word5);
-		window.draw(shapevictory);
+		
 		if (health > 0 && p == 0) {
-			highscore = time2 * (apple + banana + grape); 
+			highscore = time2 * (apple + banana + grape);
 		}
 		//writrhere
-		if (victoryy >0) {
+		/*if (victoryy > 0) {
+			window.draw(word6);
+			window.draw(word7);
+
+		}*/
+		if (health > 0 && p == 0)
+			time2 = time2 + DeltaTime.asSeconds(); //maimoke1234567890
+		//window.draw(rectangle0);
+		if (tak==3)
+		window.draw(shapeboss);
+		window.draw(shapevictory);
+		//window.draw(rectangle0);
+		if (victoryy > 0) {
 			window.draw(word6);
 			window.draw(word7);
 
 		}
-		if (health > 0 && p == 0)
-			time2 = time2 + DeltaTime.asSeconds(); //maimoke1234567890
-		//window.draw(rectangle0);
-		window.draw(shapeboss);
-		//window.draw(rectangle0);
-	
 		window.draw(shapemenu);
 		//window.draw(rectangle0);
 		window.display();
@@ -1189,14 +1199,19 @@ int main()
 				shapemenu.setPosition(-10.f, 0.f);
 				posit = posit - 1;
 			}
+			if (control == 1 && playleaw == 1) {
+				
+				song2.stop();
+				playleaw = 2;
 			
+			}
 		}
-		
-		if (control == 1) {
+
+		if (control == 1&&playleaw==0) {
 			song.stop();
 			song2.play();
+			playleaw = 1;
 			posit = 0;
-			
 		}
 		//fix1
 		if (p == 0) {
@@ -1412,39 +1427,48 @@ int main()
 				}
 			}
 		}
-
-		if (boss== 0) {
-			rectboss.top = spriteSizeY * 0;
-			//shapeboss.move(-2.f, 0.f);
-			if (bossClock.getElapsedTime().asSeconds() > 0.3f)
-			{
-				if (rectboss.left == (bossSizeX * 5))
+		if (p == 0) {
+			if (boss == 0) {
+				rectboss.top = spriteSizeY * 0;
+				//shapeboss.move(-2.f, 0.f);
+				if (bossClock.getElapsedTime().asSeconds() > 0.3f)
 				{
-					rectboss.left = 0;
+					if (rectboss.left == (bossSizeX * 5))
+					{
+						rectboss.left = 0;
+					}
+					else
+					{
+						rectboss.left += bossSizeX;
+					}
+					bossClock.restart();
 				}
-				else
-				{
-					rectboss.left += bossSizeX;
-				}
-				bossClock.restart();
+				shapeboss.setTextureRect(sf::IntRect(rectboss));
+				//shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, 60));
+				sf::Vector2f bossspawn1 = { x,y };
 			}
-			shapeboss.setTextureRect(sf::IntRect(rectboss));
-			//shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, 60));
-			sf::Vector2f bossspawn1 = { x,y };
+			if (tak == 3&&setleaw==0)
+			{
+				shapeboss.setPosition(spawnPoint1001);
+				setleaw = 1;
+			}
+			if (tak==3)
+				if (shapeboss.getPosition().x != NULL && shapeboss.getPosition().y != NULL)
+			{
+				if (shapeboss.getPosition().y < shapeSprite.getPosition().y) {
+					shapeboss.move(0.f, 0.1f);
+				}
+				else {
+					shapeboss.move(0.f, -0.1f);
+				}
+				if (shapeboss.getPosition().x < shapeSprite.getPosition().x) {
+					shapeboss.move(0.1f, 0.f);
+				}
+				else {
+					shapeboss.move(-0.1f, 0.f);
+				}
+			}
 		}
-		if (shapeboss.getPosition().y < shapeSprite.getPosition().y) {
-			shapeboss.move(0.f, 0.1f);
-		}
-		else {
-			shapeboss.move(0.f, -0.1f);
-		}
-		if (shapeboss.getPosition().x < shapeSprite.getPosition().x) {
-			shapeboss.move(0.1f, 0.f);
-		}
-		else {
-			shapeboss.move(-0.1f, 0.f);
-		}
-		
 		//////////////////////////////////////////////////////////////
 		if (bomberman == 0) {
 			rectPlayer.top = spriteSizeY * 2;
@@ -1488,7 +1512,7 @@ int main()
 		}
 		if (p == 0) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && shapeSprite.getPosition().x < 1080 - spriteSizeX - 100)
-			{	
+			{
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && shapeSprite.getPosition().x < 1080 - spriteSizeX - 100) {
 					rectPlayer2.top = spriteSizeY;
 					shapeSprite.move(1.7f, 0.f);
@@ -1523,7 +1547,7 @@ int main()
 				}
 				shapeSprite.setTextureRect(sf::IntRect(rectPlayer));
 				//spriteSizeX* animationFrame, spriteSizeY * 1, spriteSizeX, spriteSizeY)
-		
+
 				if (shapewall.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 					shapeSprite.move(-2.7f, 0.f);
 				}
@@ -1743,7 +1767,7 @@ int main()
 		if (p == 0) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && shapeSprite.getPosition().x >= 100)
 			{
-				
+
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && shapeSprite.getPosition().x >= 100) {
 					rectPlayer2.top = spriteSizeY * 0;
 					shapeSprite.move(-1.7f, 0.f);
@@ -1996,7 +2020,7 @@ int main()
 		if (p == 0) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && shapeSprite.getPosition().y >= 100)
 			{
-			
+
 				rectPlayer.top = spriteSizeY * 3.05;
 				shapeSprite.move(0.f, -0.7f);
 				if (playerClock.getElapsedTime().asSeconds() > 0.3f)
@@ -2280,7 +2304,7 @@ int main()
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && shapeSprite.getPosition().y < 720 - spriteSizeY - 65)
 
 			{
-			
+
 				rectPlayer.top = spriteSizeY * 2;
 				shapeSprite.move(0.f, 0.7f);
 				if (playerClock.getElapsedTime().asSeconds() > 0.3f)
@@ -2583,7 +2607,7 @@ int main()
 			}
 		}
 		//maimoke
-		if (enterclock.getElapsedTime().asSeconds()>=4.5) {
+		if (enterclock.getElapsedTime().asSeconds() >= 4.5) {
 			status = 0;
 			enterclock.restart();
 
@@ -2597,7 +2621,7 @@ int main()
 				bombtime = 1;
 			}
 		}
-		if (bombtime <= 0 && bombmove==1)
+		if (bombtime <= 0 && bombmove == 1)
 		{
 			specialExplosion.setPosition(specialBombSprite.getPosition().x - specialExplosionSizeX / 2 + spriteSizeX / 2, specialBombSprite.getPosition().y - specialExplosionSizeY / 2 + spriteSizeY / 2);
 
@@ -2625,14 +2649,14 @@ int main()
 			jk--;
 		}
 		//jamao.play
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)&&bombmove==0)//Bug
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) && bombmove == 0)//Bug
 		{
-				bombmove++;
+			bombmove++;
 		}
 		//Boom
 		//if (jk == 0) {
 		if (specialbomb == 0) {
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && bomb == 0 && bomb10 == 0&&status==0)
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && bomb == 0 && bomb10 == 0 && status == 0)
 			{
 				temp.setTexture(bombTexture);
 				temp.setTextureRect(sf::IntRect(bombSizeX * animationFrame2, 0, bombSizeX, bombSizeY));
@@ -2647,34 +2671,34 @@ int main()
 				status = 1;
 			}
 		}
-			//	}
-			time_interval = time.getElapsedTime().asSeconds();
-			if (time_interval > 1.5 && bomb == 1) {
-				int h = 0;
+		//	}
+		time_interval = time.getElapsedTime().asSeconds();
+		if (time_interval > 1.5 && bomb == 1) {
+			int h = 0;
 
-				temp.setTexture(explosionTexture);
-				temp.setTextureRect(sf::IntRect(explosionSizeX * animationFrame3, 0, explosionSizeX, explosionSizeY));
-				temp.setPosition(temp.getPosition().x - 60.f, temp.getPosition().y - 50.f);
+			temp.setTexture(explosionTexture);
+			temp.setTextureRect(sf::IntRect(explosionSizeX * animationFrame3, 0, explosionSizeX, explosionSizeY));
+			temp.setPosition(temp.getPosition().x - 60.f, temp.getPosition().y - 50.f);
 
-				temp.setScale(sf::Vector2f(0.25f, 0.25f));
+			temp.setScale(sf::Vector2f(0.25f, 0.25f));
 
-				explosionPlace.push_back(temp);
-				bomb = 0;
-				explosion++;
-				//std::cout << 'a';
-				system("cls");
-				if (h == 0 && health == 3) {
+			explosionPlace.push_back(temp);
+			bomb = 0;
+			explosion++;
+			//std::cout << 'a';
+			system("cls");
+			if (h == 0 && health == 3) {
 
-					shapeblueblock.setPosition(130.f, 0.f);
-					health--;
-				}
+				shapeblueblock.setPosition(130.f, 0.f);
+				health--;
 			}
-			if (time_interval > 2 && explosion > 0) {
-				explosionPlace[explosion - 1].setPosition(NULL - 1000, NULL - 1000);
-				bombPlace[explosion - 1].setPosition(NULL - 1000, NULL - 1000);
-				clock.restart();
-			}
-		
+		}
+		if (time_interval > 2 && explosion > 0) {
+			explosionPlace[explosion - 1].setPosition(NULL - 1000, NULL - 1000);
+			bombPlace[explosion - 1].setPosition(NULL - 1000, NULL - 1000);
+			clock.restart();
+		}
+
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 		{
@@ -2790,16 +2814,19 @@ int main()
 		if (specialExplosion.getGlobalBounds().intersects(shapemonster.getGlobalBounds())) {
 
 			shapemonster.setPosition(10000.f, 10000.f);
+			tak++;
 		}
 		if (specialExplosion.getGlobalBounds().intersects(shapemonster2.getGlobalBounds())) {
 
 			shapemonster2.setPosition(10000.f, 10000.f);
+			tak++;
 		}
 		//gm2
 		if (specialExplosion.getGlobalBounds().intersects(shapemonster3.getGlobalBounds())) {
 
 
 			shapemonster3.setPosition(10000.f, 10000.f);
+			tak++;
 		}
 		for (int i = 0; i <= explosion - 1; i++) {
 			if (explosionPlace[i].getGlobalBounds().intersects(shapewall.getGlobalBounds())) {
@@ -2896,23 +2923,25 @@ int main()
 				shapewall31.setPosition(10000.f, 10000.f);
 			}
 			//gm3
-		
+
 			if (explosionPlace[i].getGlobalBounds().intersects(shapemonster.getGlobalBounds()) && invinciblemon <= 0) {
 				monsterheart--;
 				invinciblemon = 3;
-				
+
 				if (monsterheart == 0) {
 					shapemonster.setPosition(10000.f, 10000.f);
+					tak++;
 				}
 			}
 			invinciblemon = invinciblemon - DeltaTime.asSeconds();
-			if (explosionPlace[i].getGlobalBounds().intersects(shapemonster2.getGlobalBounds())  && invinciblemon2 <= 0) {
+			if (explosionPlace[i].getGlobalBounds().intersects(shapemonster2.getGlobalBounds()) && invinciblemon2 <= 0) {
 				monsterheart2--;
 				invinciblemon2 = 3;
 				if (monsterheart2 == 0) {
 					shapemonster2.setPosition(10000.f, 10000.f);
+					tak++;
 				}
-				
+
 			}
 			invinciblemon2 = invinciblemon2 - DeltaTime.asSeconds();
 			if (explosionPlace[i].getGlobalBounds().intersects(shapemonster3.getGlobalBounds()) && invinciblemon3 <= 0) {
@@ -2920,30 +2949,37 @@ int main()
 				invinciblemon3 = 3;
 				if (monsterheart3 == 0) {
 					shapemonster3.setPosition(10000.f, 10000.f);
+					tak++;
 				}
 			}
 			invinciblemon3 = invinciblemon3 - DeltaTime.asSeconds();
 			//gm4
+			if (tak==3)
+			{
+				if (explosionPlace[i].getGlobalBounds().intersects(shapeboss.getGlobalBounds()) && invinciblemon4 <= 0) {
+					bossheart--;
+					invinciblemon4 = 10;
 
-			if (explosionPlace[i].getGlobalBounds().intersects(shapeboss.getGlobalBounds()) && invinciblemon4 <= 0) {
-				bossheart--;
-				invinciblemon4 = 10;
-
-				if (bossheart == 0) {
-					shapeboss.setPosition(10000.f, 10000.f);
+					if (bossheart == 0) {
+						shapeboss.setPosition(10000.f, 10000.f);
+					}
 				}
-			}
-			invinciblemon4 = invinciblemon4 - DeltaTime.asSeconds();
-			//gm fire
-			if (shapefireeffect.getGlobalBounds().intersects(shapeboss.getGlobalBounds()) && invinciblemon5 <= 0) {
-				bossheart=bossheart-4;
-				invinciblemon5 = 10;
-				fireuse--;
-				if (bossheart == 0) {
-					shapeboss.setPosition(10000.f, 10000.f);
+				invinciblemon4 = invinciblemon4 - DeltaTime.asSeconds();
+				//gm fire
+				if (shapefireeffect.getGlobalBounds().intersects(shapeboss.getGlobalBounds()) && invinciblemon5 <= 0&&fireuse>0) {
+					bossheart = bossheart - 4;
+					invinciblemon5 = 10;
+					fireuse--;
+					if (bossheart == 0) {
+						shapeboss.setPosition(10000.f, 10000.f);
+					}
+					if (fireuse <= 0) {
+						shapefireeffect.setPosition(1000.f, 1000.f);
+						fire2 = 0;
+					}
 				}
+				invinciblemon5 = invinciblemon5 - DeltaTime.asSeconds();
 			}
-			invinciblemon5 = invinciblemon5 - DeltaTime.asSeconds();
 			//////////////////////////
 			if (i > 0.7) {
 				if (explosionPlace[i].getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) && health == 2) {
@@ -2978,20 +3014,20 @@ int main()
 			fireuse--;
 			shapemonster3.setPosition(-1000.f, -1000.f);
 		}
-		
+
 		if (fireuse == 0) {
 			shapefireeffect.setPosition(-1000.f, -1000.f);
 		}
 
 		//25
 
-		if (circle.getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) && apple + banana + grape >= 1&& health != -1) {
+		if (circle.getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) && apple + banana + grape >= 1 && health != -1) {
 			//shapeSprite.setPosition(spawnPoint);
 			invincible = 0;
 			p = 1;
 			victoryy = victoryy + 1;
 			posit = 1;
-			control =1;
+			control = 1;
 			health = 1;//new health
 			//shapelose.setPosition(2500.f, 7000.f);
 			shapevictory.setPosition(0.f, 0.f);
@@ -3000,15 +3036,15 @@ int main()
 				window.close();
 			}
 		}
-		printf("posit=%d\n", posit);
+		printf("bossheart=%d\n", bossheart);
 		if (shapespecialbomb.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
-			
+
 			shapespecialbomb.setPosition(1700.f, 1700.f);
 			specialbomb = 3;
 			jk = 3;
 		}
-		if (jk >0) {
-			shaperemote.setPosition(shapeSprite.getPosition().x-5.f, shapeSprite.getPosition().y - 45.f);
+		if (jk > 0) {
+			shaperemote.setPosition(shapeSprite.getPosition().x - 5.f, shapeSprite.getPosition().y - 45.f);
 		}
 		if (jk == 0) {
 			shaperemote.setPosition(-1000.f, -1000.f);
@@ -3060,13 +3096,14 @@ int main()
 			shapegrape3.setPosition(1700.f, 1700.f);
 		}
 		if (p == 0) {
-			if (bossSizeX * 2 ) {
+		if(tak==3)
+			if (bossSizeX * 2) {
 				rectangle0.setPosition(shapeboss.getPosition().x + 20, shapeboss.getPosition().y + 170.f);
 				if (shapeSprite.getGlobalBounds().intersects(rectangle0.getGlobalBounds())) {
 					shapeSprite.setPosition(100.f, 100.f);
 				}
 			}
-			
+
 		}
 		if ((shapemonster.getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) ||
 			shapemonster2.getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) ||
