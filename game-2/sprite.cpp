@@ -40,6 +40,7 @@ int highscore;
 int victoryy = 0;
 int round1 = 0;
 int control=0;
+bool status=0;
 /*int time10() {
 	int i;
 	for (i = 1; i <= 10; i++);
@@ -51,6 +52,9 @@ int main()
 	char revalue = '.';
 
 	sf::RenderWindow window(sf::VideoMode(1080, 720), "Game from jamo!");
+	//cursor
+	sf::Cursor cursor;
+	cursor.loadFromSystem(sf::Cursor::Hand);
 	//song
 	sf::Music song;
 	song.openFromFile("Battle_-_Critical_Maneuvers.ogg");
@@ -68,7 +72,11 @@ int main()
 	sf::CircleShape circle(20.f);
 	circle.setPosition({ 900.f, 200.f });
 	circle.setFillColor(sf::Color::Red);
+	////// Rectangle0(x0,y0)
 
+	sf::RectangleShape rectangle0(Vector2f(50.f, 50.f));
+	rectangle0.setPosition(Vector2f(700.f, 229.f));
+	rectangle0.setFillColor(Color::White);
 	////// Rectangle1 (x1,y1)
 
 	sf::RectangleShape rectangle(Vector2f(75.f, 52.f));
@@ -936,6 +944,7 @@ int main()
 	sf::Clock monsterClock3;
 	sf::Clock deltaClock;
 	sf::Clock fireClock;
+	sf::Clock enterclock;
 	sf::Time DeltaTime;
 	float time_interval = 0;
 	float time_interval2 = 0;
@@ -1133,6 +1142,7 @@ int main()
 		if (health > 0 && p == 0)
 			time2 = time2 + DeltaTime.asSeconds(); //maimoke1234567890
 		window.draw(shapemenu);
+		//window.draw(rectangle0);
 		window.display();
 		//get the fuck out off menu
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
@@ -2499,7 +2509,11 @@ int main()
 			}
 		}
 		//maimoke
+		if (enterclock.getElapsedTime().asSeconds()>=4.5) {
+			status = 0;
+			enterclock.restart();
 
+		}
 
 		if (specialbomb != 0) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && bomb10 == 0 && bomb == 0) {
@@ -2544,7 +2558,7 @@ int main()
 		//Boom
 		//if (jk == 0) {
 		if (specialbomb == 0) {
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && bomb == 0 && bomb10 == 0)
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && bomb == 0 && bomb10 == 0&&status==0)
 			{
 				temp.setTexture(bombTexture);
 				temp.setTextureRect(sf::IntRect(bombSizeX * animationFrame2, 0, bombSizeX, bombSizeY));
@@ -2556,6 +2570,7 @@ int main()
 				bombPlace.push_back(temp);//delete bomb
 
 				bomb = 1;
+				status = 1;
 			}
 		}
 			//	}
@@ -2972,6 +2987,7 @@ int main()
 			window.close();
 		}
 		window.clear();
+		window.setMouseCursor(cursor);
 	}
 	return 0;
 }
