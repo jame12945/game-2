@@ -21,6 +21,8 @@ float invincible = 0;
 float invinciblemon = 0;
 float invinciblemon2 = 0;
 float invinciblemon3 = 0;
+float invinciblemon4 = 0;
+float invinciblemon5 = 0;
 float time2 = 0;
 int specialbomb = 0;
 bool bomb10 = 0;
@@ -31,7 +33,8 @@ int mv = 0;
 int monsterheart = 3;
 int monsterheart2 = 3;
 int monsterheart3= 3;
-int j, j2, j3;
+int bossheart = 10;
+int j, j2, j3,j4;
 bool monsterheartbool = 0;
 int fireuse = 2;
 int bombmove = 0;
@@ -75,7 +78,7 @@ int main()
 	circle.setFillColor(sf::Color::Red);
 	////// Rectangle0(x0,y0)
 
-	sf::RectangleShape rectangle0(Vector2f(50.f, 50.f));
+	sf::RectangleShape rectangle0(Vector2f(150.f, 50.f));
 	rectangle0.setPosition(Vector2f(700.f, 229.f));
 	rectangle0.setFillColor(Color::White);
 	////// Rectangle1 (x1,y1)
@@ -228,9 +231,12 @@ int main()
 	//////Texture enermyheart
 	sf::Texture enermyheartTexture;
 	if (!enermyheartTexture.loadFromFile("heart4.png"));
+	//////Texture boss
+	sf::Texture bossTexture;
+	if (!bossTexture.loadFromFile("boss5-removebg-preview.png"));
 	//////Texture menu
 	sf::Texture menuTexture;
-	if (!menuTexture.loadFromFile("menugame.jpg"));
+	if (!menuTexture.loadFromFile("bigmenu.jpg"));
 	/// <summary>
 	/// </summary>
 	/// <returns></returns>
@@ -308,7 +314,7 @@ int main()
 	shapemenu.setScale(sf::Vector2f(0.58f, 0.62f));
 	shapemenu.setTextureRect(sf::IntRect(0, 0, menuSizeX, menuSizeY));
 	
-		sf::Vector2f spawnPoint716 = {0.f,0.f };//140
+		sf::Vector2f spawnPoint716 = {-10.f,0.f };//140
 		shapemenu.setPosition(spawnPoint716);
 	
 	///////remote jamao
@@ -528,6 +534,16 @@ int main()
 	sf::Vector2f spawnPoint103 = { 30.f, 0.f };
 	shapeheart.setPosition(spawnPoint103);
 
+	//////boss
+	int bossSizeX = bossTexture.getSize().x /5.8;
+	int bossSizeY = bossTexture.getSize().y ;
+	sf::Sprite shapeboss;
+	sf::IntRect rectboss(0, 0, bossSizeX, bossSizeY);
+	shapeboss.setTextureRect(sf::IntRect(0, 0, bossSizeX, bossSizeY));
+	shapeboss.setScale(sf::Vector2f(3.0f, 3.0f));
+	shapeboss.setTexture(bossTexture);
+	sf::Vector2f spawnPoint1001 = { 700.f, 420.f };
+	shapeboss.setPosition(spawnPoint1001);
 	//////monster
 	int monsterSizeX = monsterTexture.getSize().x / 3;
 	int monsterSizeY = monsterTexture.getSize().y / 4;
@@ -945,6 +961,7 @@ int main()
 	sf::Clock monsterClock;
 	sf::Clock monsterClock2;
 	sf::Clock monsterClock3;
+	sf::Clock bossClock;
 	sf::Clock deltaClock;
 	sf::Clock fireClock;
 	sf::Clock enterclock;
@@ -965,6 +982,7 @@ int main()
 	int explosion = 0;
 	int explosion2 = 0;
 	bool bomberman = 0;
+	bool boss = 0;
 	bool ex = 0;
 	bool monster = 1;
 	bool monster2 = 1;
@@ -1130,6 +1148,13 @@ int main()
 			shapeenermyheart.setPosition(shapemonster3.getPosition().x + (20 * j3), shapemonster3.getPosition().y - 20.f);
 			window.draw(shapeenermyheart);
 		}
+		for (j4 = 0; j4 < bossheart; j4++)
+		{
+			sf::IntRect rectbossHeart(0, 0, enermyheartSizeX, enermyheartSizeY);
+			shapeenermyheart.setTexture(enermyheartTexture);
+			shapeenermyheart.setPosition(shapeboss.getPosition().x + (20 * j4), shapeboss.getPosition().y +20.f);
+			window.draw(shapeenermyheart);
+		}
 		window.draw(word4);
 		window.draw(word5);
 		window.draw(shapevictory);
@@ -1144,6 +1169,10 @@ int main()
 		}
 		if (health > 0 && p == 0)
 			time2 = time2 + DeltaTime.asSeconds(); //maimoke1234567890
+		//window.draw(rectangle0);
+		window.draw(shapeboss);
+		//window.draw(rectangle0);
+	
 		window.draw(shapemenu);
 		//window.draw(rectangle0);
 		window.display();
@@ -1157,18 +1186,18 @@ int main()
 				shapemenu.setPosition(-1000.f, -1000.f);
 			}
 			if (posit == 1) {
-				shapemenu.setPosition(0.f, 0.f);
-				
+				shapemenu.setPosition(-10.f, 0.f);
+				posit = posit - 1;
 			}
 			
 		}
+		
 		if (control == 1) {
 			song.stop();
 			song2.play();
 			posit = 0;
 			
 		}
-
 		//fix1
 		if (p == 0) {
 			if (shapespecialbomb.getPosition().x >= 95) {
@@ -1209,6 +1238,7 @@ int main()
 
 			}
 		}
+
 		if (p == 0) {
 			if (shapemonster3.getPosition().y >= 100) {
 
@@ -1383,6 +1413,39 @@ int main()
 			}
 		}
 
+		if (boss== 0) {
+			rectboss.top = spriteSizeY * 0;
+			//shapeboss.move(-2.f, 0.f);
+			if (bossClock.getElapsedTime().asSeconds() > 0.3f)
+			{
+				if (rectboss.left == (bossSizeX * 5))
+				{
+					rectboss.left = 0;
+				}
+				else
+				{
+					rectboss.left += bossSizeX;
+				}
+				bossClock.restart();
+			}
+			shapeboss.setTextureRect(sf::IntRect(rectboss));
+			//shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, 60));
+			sf::Vector2f bossspawn1 = { x,y };
+		}
+		if (shapeboss.getPosition().y < shapeSprite.getPosition().y) {
+			shapeboss.move(0.f, 0.1f);
+		}
+		else {
+			shapeboss.move(0.f, -0.1f);
+		}
+		if (shapeboss.getPosition().x < shapeSprite.getPosition().x) {
+			shapeboss.move(0.1f, 0.f);
+		}
+		else {
+			shapeboss.move(-0.1f, 0.f);
+		}
+		
+		//////////////////////////////////////////////////////////////
 		if (bomberman == 0) {
 			rectPlayer.top = spriteSizeY * 2;
 
@@ -2860,6 +2923,28 @@ int main()
 				}
 			}
 			invinciblemon3 = invinciblemon3 - DeltaTime.asSeconds();
+			//gm4
+
+			if (explosionPlace[i].getGlobalBounds().intersects(shapeboss.getGlobalBounds()) && invinciblemon4 <= 0) {
+				bossheart--;
+				invinciblemon4 = 10;
+
+				if (bossheart == 0) {
+					shapeboss.setPosition(10000.f, 10000.f);
+				}
+			}
+			invinciblemon4 = invinciblemon4 - DeltaTime.asSeconds();
+			//gm fire
+			if (shapefireeffect.getGlobalBounds().intersects(shapeboss.getGlobalBounds()) && invinciblemon5 <= 0) {
+				bossheart=bossheart-4;
+				invinciblemon5 = 10;
+				fireuse--;
+				if (bossheart == 0) {
+					shapeboss.setPosition(10000.f, 10000.f);
+				}
+			}
+			invinciblemon5 = invinciblemon5 - DeltaTime.asSeconds();
+			//////////////////////////
 			if (i > 0.7) {
 				if (explosionPlace[i].getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) && health == 2) {
 
@@ -2893,6 +2978,7 @@ int main()
 			fireuse--;
 			shapemonster3.setPosition(-1000.f, -1000.f);
 		}
+		
 		if (fireuse == 0) {
 			shapefireeffect.setPosition(-1000.f, -1000.f);
 		}
@@ -2972,6 +3058,15 @@ int main()
 		if (shapegrape3.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 			grape = grape + 6;
 			shapegrape3.setPosition(1700.f, 1700.f);
+		}
+		if (p == 0) {
+			if (bossSizeX * 2 ) {
+				rectangle0.setPosition(shapeboss.getPosition().x + 20, shapeboss.getPosition().y + 170.f);
+				if (shapeSprite.getGlobalBounds().intersects(rectangle0.getGlobalBounds())) {
+					shapeSprite.setPosition(100.f, 100.f);
+				}
+			}
+			
 		}
 		if ((shapemonster.getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) ||
 			shapemonster2.getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) ||
