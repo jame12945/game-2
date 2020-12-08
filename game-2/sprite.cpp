@@ -41,6 +41,7 @@ int victoryy = 0;
 int round1 = 0;
 int control=0;
 bool status=0;
+bool posit = 0;
 /*int time10() {
 	int i;
 	for (i = 1; i <= 10; i++);
@@ -306,8 +307,10 @@ int main()
 	int menuSizeY = menuTexture.getSize().y;
 	shapemenu.setScale(sf::Vector2f(0.58f, 0.62f));
 	shapemenu.setTextureRect(sf::IntRect(0, 0, menuSizeX, menuSizeY));
-	sf::Vector2f spawnPoint716 = { 0.f,0.f };//140
-	shapemenu.setPosition(spawnPoint716);
+	
+		sf::Vector2f spawnPoint716 = {0.f,0.f };//140
+		shapemenu.setPosition(spawnPoint716);
+	
 	///////remote jamao
 	sf::Sprite shaperemote;
 	shaperemote.setTexture(remoteTexture);
@@ -1150,12 +1153,20 @@ int main()
 				song.play();
 				time2 = 0;
 			}
+			if (posit == 0) {
+				shapemenu.setPosition(-1000.f, -1000.f);
+			}
+			if (posit == 1) {
+				shapemenu.setPosition(0.f, 0.f);
+				
+			}
 			
-			shapemenu.setPosition(-1000.f, -1000.f);
 		}
 		if (control == 1) {
 			song.stop();
 			song2.play();
+			posit = 0;
+			
 		}
 
 		//fix1
@@ -2893,6 +2904,7 @@ int main()
 			invincible = 0;
 			p = 1;
 			victoryy = victoryy + 1;
+			posit = 1;
 			control =1;
 			health = 1;//new health
 			//shapelose.setPosition(2500.f, 7000.f);
@@ -2902,7 +2914,7 @@ int main()
 				window.close();
 			}
 		}
-		printf("control=%d\n", control);
+		printf("posit=%d\n", posit);
 		if (shapespecialbomb.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 			
 			shapespecialbomb.setPosition(1700.f, 1700.f);
