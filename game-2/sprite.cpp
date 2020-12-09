@@ -8,6 +8,7 @@
 #include<SFML/Audio.hpp>
 using namespace sf;
 int p = 0;
+int jt = 0;
 int jk = 0;
 float x, y;
 int c = 0, v, b, n = 0;
@@ -35,6 +36,7 @@ int monsterheart2 = 3;
 int monsterheart3 = 3;
 int bossheart = 10;
 int j, j2, j3, j4;
+int breakk=0;
 bool monsterheartbool = 0;
 int fireuse = 2;
 int bombmove = 0;
@@ -48,6 +50,10 @@ bool posit = 0;
 int tak = 0;
 bool setleaw = 0;
 bool playleaw = 0;
+int end = 0;
+int st = 0;
+int loop;
+
 /*int time10() {
 	int i;
 	for (i = 1; i <= 10; i++);
@@ -1187,32 +1193,60 @@ int main()
 		//window.draw(rectangle0);
 		window.display();
 		//get the fuck out off menu
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)&&end==0) {
 			if (control == 0) {
 				song.play();
 				time2 = 0;
 			}
 			if (posit == 0) {
 				shapemenu.setPosition(-1000.f, -1000.f);
+				posit = 0;
 			}
-			if (posit == 1) {
-				shapemenu.setPosition(-10.f, 0.f);
-				posit = posit - 1;
-			}
-			if (control == 1 && playleaw == 1) {
-				
+			/*if (control == 1 && playleaw == 1) {
+
 				song2.stop();
 				playleaw = 2;
-			
+				posit = 0;
+
+			}*/
+		}
+
+		printf("breakk=%d\n", breakk);
+		
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && end >= 1) {
+			if (posit == 1&&playleaw==1&&control==1&&st==1) {
+				shapemenu.setPosition(-10.f, 0.f);
+				song2.stop();
+				jt = 1;
+
+			}
+		
+		}
+		if (p == 1) {
+				if (st == 1 && jt == 1&&breakk==0)//st=2
+				{
+					song.play();
+					jt = 2;
+					breakk = breakk + 1;
+				}
+
+		}
+		if (breakk==1) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && end >= 1000) {
+				shapemenu.setPosition(-10000.f, -10000.f);
 			}
 		}
 
+		/////////////////////////////////////////
 		if (control == 1&&playleaw==0) {
 			song.stop();
 			song2.play();
 			playleaw = 1;
 			posit = 0;
 		}
+
+	
 		//fix1
 		if (p == 0) {
 			if (shapespecialbomb.getPosition().x >= 95) {
@@ -3025,6 +3059,9 @@ int main()
 			//shapeSprite.setPosition(spawnPoint);
 			invincible = 0;
 			p = 1;
+			posit = 1;
+			st = 1;
+			end += 1;
 			victoryy = victoryy + 1;
 			posit = 1;
 			control = 1;
@@ -3036,7 +3073,7 @@ int main()
 				window.close();
 			}
 		}
-		printf("bossheart=%d\n", bossheart);
+		//printf("bossheart=%d\n", bossheart);
 		if (shapespecialbomb.getGlobalBounds().intersects(shapeSprite.getGlobalBounds())) {
 
 			shapespecialbomb.setPosition(1700.f, 1700.f);
@@ -3125,7 +3162,9 @@ int main()
 			window.draw(shapelose);
 			shapelose.setPosition(290.f, 100.f);
 			control = 1;
-
+			posit = 1;
+			end += 1;
+			st = 1;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 			window.close();
