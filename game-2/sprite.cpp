@@ -1211,7 +1211,8 @@ int main()
 			}*/
 		}
 
-		printf("breakk=%d\n", breakk);
+		//printf("breakk=%d\n", breakk);
+		printf("end=%d\n", end);
 		
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && end >= 1) {
@@ -1233,7 +1234,7 @@ int main()
 
 		}
 		if (breakk==1) {
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && end >= 1000) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && end >= 1200) {
 				shapemenu.setPosition(-10000.f, -10000.f);
 			}
 		}
