@@ -6,6 +6,7 @@
 #include<conio.h>
 #include<time.h>
 #include<SFML/Audio.hpp>
+sf::Event event;
 using namespace sf;
 int p = 0;
 int jt = 0;
@@ -53,6 +54,8 @@ bool playleaw = 0;
 int end = 0;
 int st = 0;
 int loop;
+int z = 0;
+bool state = 0;
 
 /*int time10() {
 	int i;
@@ -85,11 +88,21 @@ int main()
 	sf::CircleShape circle(20.f);
 	circle.setPosition({ 900.f, 200.f });
 	circle.setFillColor(sf::Color::Red);
+	//spritemouse
+	sf::RectangleShape spritemouse;
+	spritemouse.setFillColor(sf::Color::Green);
+	spritemouse.setSize(sf::Vector2f(10.f, 10.f));
+	spritemouse.setPosition(sf::Vector2f(200.f, 200.f));
 	////// Rectangle0(x0,y0)
 
-	sf::RectangleShape rectangle0(Vector2f(150.f, 50.f));
+	sf::RectangleShape rectangle0(Vector2f(50.f, 170.f));
 	rectangle0.setPosition(Vector2f(700.f, 229.f));
 	rectangle0.setFillColor(Color::White);
+	////// Rectangle0(x0.1,y0.1)
+
+	sf::RectangleShape rectangle1000(Vector2f(220.f, 100.f));
+	rectangle1000.setPosition(Vector2f(430.f, 220.f));
+	rectangle1000.setFillColor(Color::Red);
 	////// Rectangle1 (x1,y1)
 
 	sf::RectangleShape rectangle(Vector2f(75.f, 52.f));
@@ -452,9 +465,7 @@ int main()
 	int bananax = 1, bananay = 1;
 	time_t t;
 
-
 	srand((unsigned)time(&t));
-
 
 	//y=492
 	//x=821
@@ -551,7 +562,10 @@ int main()
 	shapeboss.setTextureRect(sf::IntRect(0, 0, bossSizeX, bossSizeY));
 	shapeboss.setScale(sf::Vector2f(3.0f, 3.0f));
 	shapeboss.setTexture(bossTexture);
-	sf::Vector2f spawnPoint1001 = { 700.f, 420.f };
+	time_t t6;
+	srand((unsigned)time(&t6));
+	sf::Vector2f spawnPoint256 = { 100 + float(rand() % 821),100 + float(rand() % 492) };
+	//sf::Vector2f spawnPoint256 = {750.f,500.f };
 	shapeboss.setPosition(NULL,NULL);
 	//////monster
 	int monsterSizeX = monsterTexture.getSize().x / 3;
@@ -1009,7 +1023,7 @@ int main()
 	{
 
 		//printf("Position X=%f Y=%f\n\n", shapeSprite.getPosition().x, shapeSprite.getPosition().y);
-		sf::Event event;
+
 		bt = time.getElapsedTime().asMilliseconds();
 		bt2 = time.getElapsedTime().asMilliseconds();
 		bt3 = time.getElapsedTime().asMilliseconds();
@@ -1189,15 +1203,30 @@ int main()
 			window.draw(word7);
 
 		}
+		//window.draw(rectangle1000);
 		window.draw(shapemenu);
+		window.draw(spritemouse);
 		//window.draw(rectangle0);
 		window.display();
 		//get the fuck out off menu
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)&&end==0) {
+		//mouse
+		//////
+		sf::Mouse mouse;
+		spritemouse.setPosition(mouse.getPosition(window).x-(spritemouse.getSize().x/2), mouse.getPosition(window).y - (spritemouse.getSize().y/ 2));
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)&&z==0) {
+			//spritemouse.setPosition(0.f, 0.f);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) ){
+			z+=1;
+		}
+		
+		if (end==0&&(z==1||( spritemouse.getGlobalBounds().intersects(rectangle1000.getGlobalBounds())&& sf::Mouse::isButtonPressed(sf::Mouse::Left)))) {
 			if (control == 0) {
 				song.play();
 				time2 = 0;
+				rectangle1000.setPosition(1000-NULL,1000- NULL);
 			}
+
 			if (posit == 0) {
 				shapemenu.setPosition(-1000.f, -1000.f);
 				posit = 0;
@@ -1212,7 +1241,7 @@ int main()
 		}
 
 		//printf("breakk=%d\n", breakk);
-		printf("end=%d\n", end);
+		printf("z=%d\n", z);
 		
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && end >= 1) {
@@ -1237,6 +1266,7 @@ int main()
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && end >= 1200) {
 				shapemenu.setPosition(-10000.f, -10000.f);
 			}
+			p = 0;//change my game
 		}
 
 		/////////////////////////////////////////
@@ -1484,23 +1514,23 @@ int main()
 			}
 			if (tak == 3&&setleaw==0)
 			{
-				shapeboss.setPosition(spawnPoint1001);
+				shapeboss.setPosition(spawnPoint256);
 				setleaw = 1;
 			}
 			if (tak==3)
 				if (shapeboss.getPosition().x != NULL && shapeboss.getPosition().y != NULL)
 			{
 				if (shapeboss.getPosition().y < shapeSprite.getPosition().y) {
-					shapeboss.move(0.f, 0.1f);
+					shapeboss.move(0.f, 0.15f);
 				}
 				else {
-					shapeboss.move(0.f, -0.1f);
+					shapeboss.move(0.f, -0.15f);
 				}
 				if (shapeboss.getPosition().x < shapeSprite.getPosition().x) {
-					shapeboss.move(0.1f, 0.f);
+					shapeboss.move(0.15f, 0.f);
 				}
 				else {
-					shapeboss.move(-0.1f, 0.f);
+					shapeboss.move(-0.15f, 0.f);
 				}
 			}
 		}
@@ -3003,7 +3033,7 @@ int main()
 				//gm fire
 				if (shapefireeffect.getGlobalBounds().intersects(shapeboss.getGlobalBounds()) && invinciblemon5 <= 0&&fireuse>0) {
 					bossheart = bossheart - 4;
-					invinciblemon5 = 10;
+					invinciblemon5 = 2;
 					fireuse--;
 					if (bossheart == 0) {
 						shapeboss.setPosition(10000.f, 10000.f);
@@ -3136,7 +3166,7 @@ int main()
 		if (p == 0) {
 		if(tak==3)
 			if (bossSizeX * 2) {
-				rectangle0.setPosition(shapeboss.getPosition().x + 20, shapeboss.getPosition().y + 170.f);
+				rectangle0.setPosition(shapeboss.getPosition().x + 20, shapeboss.getPosition().y +15.f);
 				if (shapeSprite.getGlobalBounds().intersects(rectangle0.getGlobalBounds())) {
 					shapeSprite.setPosition(100.f, 100.f);
 				}
