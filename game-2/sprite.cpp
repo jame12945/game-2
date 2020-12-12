@@ -93,6 +93,7 @@ int main()
 	spritemouse.setFillColor(sf::Color::Green);
 	spritemouse.setSize(sf::Vector2f(10.f, 10.f));
 	spritemouse.setPosition(sf::Vector2f(200.f, 200.f));
+
 	////// Rectangle0(x0,y0)
 
 	sf::RectangleShape rectangle0(Vector2f(50.f, 170.f));
@@ -103,6 +104,11 @@ int main()
 	sf::RectangleShape rectangle1000(Vector2f(220.f, 100.f));
 	rectangle1000.setPosition(Vector2f(430.f, 220.f));
 	rectangle1000.setFillColor(Color::Red);
+	////// Rectangle0(x0.2,y0.2)
+
+	sf::RectangleShape rectangle2000(Vector2f(150.f, 70.f));
+	rectangle2000.setPosition(Vector2f(900.f, 628.f));
+	rectangle2000.setFillColor(Color::Blue);
 	////// Rectangle1 (x1,y1)
 
 	sf::RectangleShape rectangle(Vector2f(75.f, 52.f));
@@ -258,7 +264,7 @@ int main()
 	if (!bossTexture.loadFromFile("boss5-removebg-preview.png"));
 	//////Texture menu
 	sf::Texture menuTexture;
-	if (!menuTexture.loadFromFile("bigmenu.jpg"));
+	if (!menuTexture.loadFromFile("bigmenu2.jpg"));
 	/// <summary>
 	/// </summary>
 	/// <returns></returns>
@@ -1204,8 +1210,10 @@ int main()
 
 		}
 		//window.draw(rectangle1000);
+			//window.draw(rectangle2000);
 		window.draw(shapemenu);
 		window.draw(spritemouse);
+	
 		//window.draw(rectangle0);
 		window.display();
 		//get the fuck out off menu
@@ -1215,6 +1223,10 @@ int main()
 		spritemouse.setPosition(mouse.getPosition(window).x-(spritemouse.getSize().x/2), mouse.getPosition(window).y - (spritemouse.getSize().y/ 2));
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)&&z==0) {
 			//spritemouse.setPosition(0.f, 0.f);
+		}
+		if (spritemouse.getGlobalBounds().intersects(rectangle2000.getGlobalBounds()) && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			rectangle2000.setPosition(-2000.f, -2000.f);
+		window.close();
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) ){
 			z+=1;
