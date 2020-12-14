@@ -56,6 +56,7 @@ int st = 0;
 int loop;
 int z = 0;
 bool state = 0;
+int voopoo = 0;
 
 /*int time10() {
 	int i;
@@ -270,6 +271,8 @@ int main()
 	/// <returns></returns>
 	sf::Texture remoteTexture;
 	if (!remoteTexture.loadFromFile("remote4.png"));
+	sf::Texture laserTexture;
+	if (!laserTexture.loadFromFile("laser.png"));
 	//////Font
 	sf::Font font;
 	if (!font.loadFromFile("The Bugatten.ttf"));
@@ -363,6 +366,15 @@ int main()
 	shapelose.setTextureRect(sf::IntRect(0, 0, loseSizeX, loseSizeY));
 	sf::Vector2f spawnPoint217 = { 2900.f,10000.f };//290,100
 	shapelose.setPosition(spawnPoint217);
+	///////laser
+	sf::Sprite shapelaser;
+	shapelaser.setTexture(laserTexture);
+	int laserSizeX = laserTexture.getSize().x;
+	int laserSizeY = laserTexture.getSize().y;
+	shapelaser.setScale(sf::Vector2f(1.5f, 1.0f));
+	shapelaser.setTextureRect(sf::IntRect(0, 0,laserSizeX, laserSizeY));
+	sf::Vector2f spawnPoint299 = { 5000.f,600.f };//290,100
+	shapelaser.setPosition(spawnPoint299);
 	///////grape
 	sf::Sprite shapegrape;
 	shapegrape.setTexture(grapeTexture);
@@ -1213,7 +1225,7 @@ int main()
 			//window.draw(rectangle2000);
 		window.draw(shapemenu);
 		window.draw(spritemouse);
-	
+		window.draw(shapelaser);
 		//window.draw(rectangle0);
 		window.display();
 		//get the fuck out off menu
@@ -1230,6 +1242,12 @@ int main()
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) ){
 			z+=1;
+		}
+		if (spritemouse.getGlobalBounds().intersects(rectangle1000.getGlobalBounds())) {
+			shapelaser.setPosition(-10.f, 290.f);
+		}
+		else {
+			shapelaser.setPosition(5000.f, 400.f);
 		}
 		
 		if (end==0&&(z==1||( spritemouse.getGlobalBounds().intersects(rectangle1000.getGlobalBounds())&& sf::Mouse::isButtonPressed(sf::Mouse::Left)))) {
@@ -1253,14 +1271,17 @@ int main()
 		}
 
 		//printf("breakk=%d\n", breakk);
-		printf("z=%d\n", z);
+		printf("voopoo=%d\n", voopoo);
 		
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && end >= 1) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && end >= 1&&voopoo==0) {
 			if (posit == 1&&playleaw==1&&control==1&&st==1) {
 				shapemenu.setPosition(-10.f, 0.f);
 				song2.stop();
 				jt = 1;
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
+					voopoo = voopoo + 1;//voopoo=1
+				}
 
 			}
 		
@@ -1275,7 +1296,7 @@ int main()
 
 		}
 		if (breakk==1) {
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && end >= 1200) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && end >= 1200&&voopoo==1) {
 				shapemenu.setPosition(-10000.f, -10000.f);
 			}
 			p = 0;//change my game
