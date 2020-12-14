@@ -39,7 +39,7 @@ int monsterheart2 = 3;
 int monsterheart3 = 3;
 int bossheart = 10;
 int j, j2, j3, j4;
-int breakk=0;
+int breakk = 0;
 bool monsterheartbool = 0;
 int fireuse = 2;
 int bombmove = 0;
@@ -77,11 +77,15 @@ int main()
 	//song
 	sf::Music song;
 	song.openFromFile("Battle_-_Critical_Maneuvers.ogg");
-	song.setVolume(20.f);
+	song.setVolume(30.f);
 	//song2
 	sf::Music song2;
 	song2.openFromFile("Airship.ogg");
 	song2.setVolume(40.f);
+	//song3
+	sf::Music song3;
+	song3.openFromFile("Electronic_Battle_Theme_3.ogg");
+	song3.setVolume(50.f);
 
 	/*if(control == 1) {
 	   song2.play();
@@ -415,7 +419,7 @@ int main()
 	int laserSizeX = laserTexture.getSize().x;
 	int laserSizeY = laserTexture.getSize().y;
 	shapelaser.setScale(sf::Vector2f(1.5f, 1.0f));
-	shapelaser.setTextureRect(sf::IntRect(0, 0,laserSizeX, laserSizeY));
+	shapelaser.setTextureRect(sf::IntRect(0, 0, laserSizeX, laserSizeY));
 	sf::Vector2f spawnPoint299 = { 5000.f,600.f };//290,100
 	shapelaser.setPosition(spawnPoint299);
 	///////laser2
@@ -636,7 +640,7 @@ int main()
 	srand((unsigned)time(&t6));
 	sf::Vector2f spawnPoint256 = { 100 + float(rand() % 821),100 + float(rand() % 492) };
 	//sf::Vector2f spawnPoint256 = {750.f,500.f };
-	shapeboss.setPosition(NULL,NULL);
+	shapeboss.setPosition(NULL, NULL);
 	//////monster
 	int monsterSizeX = monsterTexture.getSize().x / 3;
 	int monsterSizeY = monsterTexture.getSize().y / 4;
@@ -1093,7 +1097,7 @@ int main()
 	{
 
 		//printf("Position X=%f Y=%f\n\n", shapeSprite.getPosition().x, shapeSprite.getPosition().y);
-		
+
 		bt = time.getElapsedTime().asMilliseconds();
 		bt2 = time.getElapsedTime().asMilliseconds();
 		bt3 = time.getElapsedTime().asMilliseconds();
@@ -1241,17 +1245,17 @@ int main()
 			shapeenermyheart.setPosition(shapemonster3.getPosition().x + (20 * j3), shapemonster3.getPosition().y - 20.f);
 			window.draw(shapeenermyheart);
 		}
-		if (tak==3)
-		for (j4 = 0; j4 < bossheart; j4++)
-		{
-			sf::IntRect rectbossHeart(0, 0, enermyheartSizeX, enermyheartSizeY);
-			shapeenermyheart.setTexture(enermyheartTexture);
-			shapeenermyheart.setPosition(shapeboss.getPosition().x + (20 * j4), shapeboss.getPosition().y + 20.f);
-			window.draw(shapeenermyheart);
-		}
+		if (tak == 3)
+			for (j4 = 0; j4 < bossheart; j4++)
+			{
+				sf::IntRect rectbossHeart(0, 0, enermyheartSizeX, enermyheartSizeY);
+				shapeenermyheart.setTexture(enermyheartTexture);
+				shapeenermyheart.setPosition(shapeboss.getPosition().x + (20 * j4), shapeboss.getPosition().y + 20.f);
+				window.draw(shapeenermyheart);
+			}
 		window.draw(word4);
 		window.draw(word5);
-		
+
 		if (health > 0 && p == 0) {
 			highscore = time2 * (apple + banana + grape);
 		}
@@ -1259,13 +1263,12 @@ int main()
 		/*if (victoryy > 0) {
 			window.draw(word6);
 			window.draw(word7);
-
 		}*/
 		if (health > 0 && p == 0)
 			time2 = time2 + DeltaTime.asSeconds(); //maimoke1234567890
 		//window.draw(rectangle0);
-		if (tak==3)
-		window.draw(shapeboss);
+		if (tak == 3)
+			window.draw(shapeboss);
 		window.draw(shapevictory);
 		//window.draw(rectangle0);
 		if (victoryy > 0) {
@@ -1279,30 +1282,31 @@ int main()
 		//window.draw(spritemouse);
 		//window.draw(rectangle5000);
 		window.draw(shapelaser);
-		
+
 		//window.draw(rectangle3000);//use
 		//window.draw(rectangle4000);//use
 		//window.draw(shapehowto);//use
 		//window.draw(rectangle0);
-		if (yo == 1&&weerboo>=0&&canb == 1) {
+		if (yo == 1 && weerboo >= 0 && canb == 1) {
 			window.draw(rectangle3000);
 			//window.draw(rectangle4000);
 			window.draw(shapelaser2);
 			window.draw(turnback);
 			window.draw(shapehowto);
-			
+
 			//yo = 0;
-		if (spritemouse.getGlobalBounds().intersects(rectangle4000.getGlobalBounds())) {
-			shapelaser2.setPosition(-10.f, 540.f);
-		}
-		else {
-			shapelaser2.setPosition(-10000.f, 600.f);
-		}
-			if (spritemouse.getGlobalBounds().intersects(rectangle4000.getGlobalBounds()) && sf::Mouse::isButtonPressed(sf::Mouse::Left)&&canb==1) {
+			if (spritemouse.getGlobalBounds().intersects(rectangle4000.getGlobalBounds())) {
+				shapelaser2.setPosition(-10.f, 540.f);
+			}
+			else {
+				shapelaser2.setPosition(-10000.f, 600.f);
+			}
+			if (spritemouse.getGlobalBounds().intersects(rectangle4000.getGlobalBounds()) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && canb == 1) {
 				yo = 0;
 				rectangle5000.setPosition(80.f, 385.f);
+				song3.stop();
 			}
-		
+
 		}
 		weerboo = weerboo + DeltaTime.asSeconds();
 		window.display();
@@ -1310,22 +1314,23 @@ int main()
 		//mouse
 		//////
 		sf::Mouse mouse;
-		spritemouse.setPosition(mouse.getPosition(window).x-(spritemouse.getSize().x/2), mouse.getPosition(window).y - (spritemouse.getSize().y/ 2));
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)&&z==0) {
+		spritemouse.setPosition(mouse.getPosition(window).x - (spritemouse.getSize().x / 2), mouse.getPosition(window).y - (spritemouse.getSize().y / 2));
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && z == 0) {
 			//spritemouse.setPosition(0.f, 0.f);
 		}
-		if (spritemouse.getGlobalBounds().intersects(rectangle2000.getGlobalBounds()) && sf::Mouse::isButtonPressed(sf::Mouse::Left)&&canb==1) {
+		if (spritemouse.getGlobalBounds().intersects(rectangle2000.getGlobalBounds()) && sf::Mouse::isButtonPressed(sf::Mouse::Left) && canb == 1) {
 			rectangle2000.setPosition(-2000.f, -2000.f);
-		window.close();
+			window.close();
 		}
 		//////how to play
-		if (yo==0&& (spritemouse.getGlobalBounds().intersects(rectangle5000.getGlobalBounds())&& sf::Mouse::isButtonPressed(sf::Mouse::Left))&&canb==1) {
+		if (yo == 0 && (spritemouse.getGlobalBounds().intersects(rectangle5000.getGlobalBounds()) && sf::Mouse::isButtonPressed(sf::Mouse::Left)) && canb == 1) {
 			rectangle5000.setPosition(-2000.f, -2000.f);
+			song3.play();
 			yo = 1;
 
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && canb == 1){
-			z+=1;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && canb == 1) {
+			z += 1;
 		}
 		/////////////////laser
 		if (spritemouse.getGlobalBounds().intersects(rectangle1000.getGlobalBounds())) {
@@ -1334,14 +1339,14 @@ int main()
 		else {
 			shapelaser.setPosition(5000.f, 400.f);
 		}
-	
+
 		/////////////////
-		if ((canb==1&&end==0)&&(z==1||( spritemouse.getGlobalBounds().intersects(rectangle1000.getGlobalBounds())&& sf::Mouse::isButtonPressed(sf::Mouse::Left)))) {
+		if ((canb == 1 && end == 0) && (z == 1 || (spritemouse.getGlobalBounds().intersects(rectangle1000.getGlobalBounds()) && sf::Mouse::isButtonPressed(sf::Mouse::Left)))) {
 			if (control == 0) {
 				song.play();
 				time2 = 0;
-				rectangle1000.setPosition(1000-NULL,1000- NULL);
-				
+				rectangle1000.setPosition(1000 - NULL, 1000 - NULL);
+
 			}
 
 			if (posit == 0) {
@@ -1349,46 +1354,44 @@ int main()
 				posit = 0;
 			}
 			/*if (control == 1 && playleaw == 1) {
-
 				song2.stop();
 				playleaw = 2;
 				posit = 0;
-
 			}*/
 		}
 
 		//printf("breakk=%d\n", breakk);
-		printf("canb=%d\n",canb);
-		
+		//printf("canb=%d\n", canb);
+
 		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::B))
 		{
-			canb=1;
+			canb = 1;
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && weerboo>= 0&&voopoo==0&&canb==1) {
-			if (posit == 1&&playleaw==1&&control==1&&st==1) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && weerboo >= 0 && voopoo == 0 && canb == 1) {
+			if (posit == 1 && playleaw == 1 && control == 1 && st == 1) {
 				shapemenu.setPosition(-10.f, 0.f);
 				song2.stop();
 				jt = 1;
-					canb=0;
+				canb = 0;
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
 					voopoo = 1;
 				}
 
 			}
-		
-		}
-		if (p == 1) {
-				if (st == 1 && jt == 1&&breakk==0)//st=2
-				{
-					song.play();
-					jt = 2;
-					breakk = breakk + 1;
-					weerboo = 0;
-				}
 
 		}
-		if (breakk==1) {
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && voopoo==1&&weerboo>=0&&canb==1) {
+		if (p == 1) {
+			if (st == 1 && jt == 1 && breakk == 0)//st=2
+			{
+				song.play();
+				jt = 2;
+				breakk = breakk + 1;
+				weerboo = 0;
+			}
+
+		}
+		if (breakk == 1) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && voopoo == 1 && weerboo >= 0 && canb == 1) {
 				shapemenu.setPosition(-10000.f, -10000.f);
 				canb = 0;
 			}
@@ -1396,7 +1399,7 @@ int main()
 		}
 
 		/////////////////////////////////////////
-		if (control == 1&&playleaw==0) {
+		if (control == 1 && playleaw == 0) {
 			song.stop();
 			song2.play();
 			weerboo = 0;
@@ -1405,7 +1408,7 @@ int main()
 			posit = 0;
 		}
 
-	
+
 		//fix1
 		if (p == 0) {
 			if (shapespecialbomb.getPosition().x >= 95) {
@@ -1640,27 +1643,27 @@ int main()
 				//shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, 60));
 				sf::Vector2f bossspawn1 = { x,y };
 			}
-			if (tak == 3&&setleaw==0)
+			if (tak == 3 && setleaw == 0)
 			{
 				shapeboss.setPosition(spawnPoint256);
 				setleaw = 1;
 			}
-			if (tak==3)
+			if (tak == 3)
 				if (shapeboss.getPosition().x != NULL && shapeboss.getPosition().y != NULL)
-			{
-				if (shapeboss.getPosition().y < shapeSprite.getPosition().y) {
-					shapeboss.move(0.f, 0.15f);
+				{
+					if (shapeboss.getPosition().y < shapeSprite.getPosition().y) {
+						shapeboss.move(0.f, 0.15f);
+					}
+					else {
+						shapeboss.move(0.f, -0.15f);
+					}
+					if (shapeboss.getPosition().x < shapeSprite.getPosition().x) {
+						shapeboss.move(0.15f, 0.f);
+					}
+					else {
+						shapeboss.move(-0.15f, 0.f);
+					}
 				}
-				else {
-					shapeboss.move(0.f, -0.15f);
-				}
-				if (shapeboss.getPosition().x < shapeSprite.getPosition().x) {
-					shapeboss.move(0.15f, 0.f);
-				}
-				else {
-					shapeboss.move(-0.15f, 0.f);
-				}
-			}
 		}
 		//////////////////////////////////////////////////////////////
 		if (bomberman == 0) {
@@ -3147,7 +3150,7 @@ int main()
 			}
 			invinciblemon3 = invinciblemon3 - DeltaTime.asSeconds();
 			//gm4
-			if (tak==3)
+			if (tak == 3)
 			{
 				if (explosionPlace[i].getGlobalBounds().intersects(shapeboss.getGlobalBounds()) && invinciblemon4 <= 0) {
 					bossheart--;
@@ -3159,7 +3162,7 @@ int main()
 				}
 				invinciblemon4 = invinciblemon4 - DeltaTime.asSeconds();
 				//gm fire
-				if (shapefireeffect.getGlobalBounds().intersects(shapeboss.getGlobalBounds()) && invinciblemon5 <= 0&&fireuse>0) {
+				if (shapefireeffect.getGlobalBounds().intersects(shapeboss.getGlobalBounds()) && invinciblemon5 <= 0 && fireuse > 0) {
 					bossheart = bossheart - 4;
 					invinciblemon5 = 2;
 					fireuse--;
@@ -3214,7 +3217,7 @@ int main()
 
 		//25
 
-		if (circle.getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) && apple + banana + grape >= 1 && health != -1) {
+		if (circle.getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) && apple + banana + grape >= 25 && health != -1) {
 			//shapeSprite.setPosition(spawnPoint);
 			invincible = 0;
 			p = 1;
@@ -3292,13 +3295,13 @@ int main()
 			shapegrape3.setPosition(1700.f, 1700.f);
 		}
 		if (p == 0) {
-		if(tak==3)
-			if (bossSizeX * 2) {
-				rectangle0.setPosition(shapeboss.getPosition().x + 20, shapeboss.getPosition().y +15.f);
-				if (shapeSprite.getGlobalBounds().intersects(rectangle0.getGlobalBounds())) {
-					shapeSprite.setPosition(100.f, 100.f);
+			if (tak == 3)
+				if (bossSizeX * 2) {
+					rectangle0.setPosition(shapeboss.getPosition().x + 20, shapeboss.getPosition().y + 15.f);
+					if (shapeSprite.getGlobalBounds().intersects(rectangle0.getGlobalBounds())) {
+						shapeSprite.setPosition(100.f, 100.f);
+					}
 				}
-			}
 
 		}
 		if ((shapemonster.getGlobalBounds().intersects(shapeSprite.getGlobalBounds()) ||
