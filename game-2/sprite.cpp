@@ -114,13 +114,13 @@ int main()
 	rectangle3000.setFillColor(Color::Black);
 	////// Rectangle0(x0.3,y0.3)
 
-	sf::RectangleShape rectangle4000(Vector2f(100.f, 80.f));
-	rectangle4000.setPosition(Vector2f(890.f, 600.f));
+	sf::RectangleShape rectangle4000(Vector2f(100.f, 120.f));
+	rectangle4000.setPosition(Vector2f(110.f, 530.f));
 	rectangle4000.setFillColor(Color::White);
 	////// Rectangle0(x0.4,y0.4)
 
-	sf::RectangleShape rectangle5000(Vector2f(100.f, 80.f));
-	rectangle5000.setPosition(Vector2f(200.f, 370.f));
+	sf::RectangleShape rectangle5000(Vector2f(270.f, 100.f));
+	rectangle5000.setPosition(Vector2f(80.f, 385.f));
 	rectangle5000.setFillColor(Color::White);
 	////// Rectangle0(x0.2,y0.2)
 
@@ -280,6 +280,9 @@ int main()
 	//////Texture boss
 	sf::Texture bossTexture;
 	if (!bossTexture.loadFromFile("boss5-removebg-preview.png"));
+	//////Texture turnback
+	sf::Texture turnbackTexture;
+	if (!turnbackTexture.loadFromFile("turnbacksign-removebg-preview.png"));
 	//////Texture menu
 	sf::Texture menuTexture;
 	if (!menuTexture.loadFromFile("bigmenu2.jpg"));
@@ -377,6 +380,17 @@ int main()
 	sf::Vector2f spawnPoint726 = { 0.f,0.f };//140
 	shapehowto.setPosition(spawnPoint726);
 
+	///////turnback
+	sf::Sprite turnback;
+	turnback.setTexture(turnbackTexture);
+	int turnbackSizeX = turnbackTexture.getSize().x;
+	int turnbackSizeY = turnbackTexture.getSize().y;
+	turnback.setScale(sf::Vector2f(0.5f, 0.5f));
+	turnback.setTextureRect(sf::IntRect(0, 0, turnbackSizeX, turnbackSizeY));
+
+	sf::Vector2f spawnPoint736 = { 50.f,470.f };//140
+	turnback.setPosition(spawnPoint736);
+
 	///////remote jamao
 	sf::Sprite shaperemote;
 	shaperemote.setTexture(remoteTexture);
@@ -404,6 +418,15 @@ int main()
 	shapelaser.setTextureRect(sf::IntRect(0, 0,laserSizeX, laserSizeY));
 	sf::Vector2f spawnPoint299 = { 5000.f,600.f };//290,100
 	shapelaser.setPosition(spawnPoint299);
+	///////laser2
+	sf::Sprite shapelaser2;
+	shapelaser2.setTexture(laserTexture);
+	int laser2SizeX = laserTexture.getSize().x;
+	int laser2SizeY = laserTexture.getSize().y;
+	shapelaser2.setScale(sf::Vector2f(1.5f, 1.0f));
+	shapelaser2.setTextureRect(sf::IntRect(0, 0, laser2SizeX, laser2SizeY));
+	sf::Vector2f spawnPoint399 = { 5000.f,600.f };//290,100
+	shapelaser2.setPosition(spawnPoint399);
 	///////grape
 	sf::Sprite shapegrape;
 	shapegrape.setTexture(grapeTexture);
@@ -1253,23 +1276,33 @@ int main()
 		//window.draw(rectangle1000);
 			//window.draw(rectangle2000);
 		window.draw(shapemenu);
-		window.draw(spritemouse);
-		window.draw(rectangle5000);
+		//window.draw(spritemouse);
+		//window.draw(rectangle5000);
 		window.draw(shapelaser);
+		
 		//window.draw(rectangle3000);//use
 		//window.draw(rectangle4000);//use
 		//window.draw(shapehowto);//use
 		//window.draw(rectangle0);
-		if (yo == 1&&weerboo>=0) {
+		if (yo == 1&&weerboo>=0&&canb == 1) {
 			window.draw(rectangle3000);
-			window.draw(rectangle4000);
+			//window.draw(rectangle4000);
+			window.draw(shapelaser2);
+			window.draw(turnback);
 			window.draw(shapehowto);
+			
 			//yo = 0;
-			if (spritemouse.getGlobalBounds().intersects(rectangle4000.getGlobalBounds()) && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		if (spritemouse.getGlobalBounds().intersects(rectangle4000.getGlobalBounds())) {
+			shapelaser2.setPosition(-10.f, 540.f);
+		}
+		else {
+			shapelaser2.setPosition(-10000.f, 600.f);
+		}
+			if (spritemouse.getGlobalBounds().intersects(rectangle4000.getGlobalBounds()) && sf::Mouse::isButtonPressed(sf::Mouse::Left)&&canb==1) {
 				yo = 0;
+				rectangle5000.setPosition(80.f, 385.f);
 			}
-			
-			
+		
 		}
 		weerboo = weerboo + DeltaTime.asSeconds();
 		window.display();
@@ -1281,26 +1314,29 @@ int main()
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)&&z==0) {
 			//spritemouse.setPosition(0.f, 0.f);
 		}
-		if (spritemouse.getGlobalBounds().intersects(rectangle2000.getGlobalBounds()) && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		if (spritemouse.getGlobalBounds().intersects(rectangle2000.getGlobalBounds()) && sf::Mouse::isButtonPressed(sf::Mouse::Left)&&canb==1) {
 			rectangle2000.setPosition(-2000.f, -2000.f);
 		window.close();
 		}
 		//////how to play
-		if (yo==0&& (spritemouse.getGlobalBounds().intersects(rectangle5000.getGlobalBounds())&& sf::Mouse::isButtonPressed(sf::Mouse::Left))) {
+		if (yo==0&& (spritemouse.getGlobalBounds().intersects(rectangle5000.getGlobalBounds())&& sf::Mouse::isButtonPressed(sf::Mouse::Left))&&canb==1) {
+			rectangle5000.setPosition(-2000.f, -2000.f);
 			yo = 1;
+
 		}
-		/////////////////
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) ){
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && canb == 1){
 			z+=1;
 		}
+		/////////////////laser
 		if (spritemouse.getGlobalBounds().intersects(rectangle1000.getGlobalBounds())) {
 			shapelaser.setPosition(-10.f, 290.f);
 		}
 		else {
 			shapelaser.setPosition(5000.f, 400.f);
 		}
-		
-		if (end==0&&(z==1||( spritemouse.getGlobalBounds().intersects(rectangle1000.getGlobalBounds())&& sf::Mouse::isButtonPressed(sf::Mouse::Left)))) {
+	
+		/////////////////
+		if ((canb==1&&end==0)&&(z==1||( spritemouse.getGlobalBounds().intersects(rectangle1000.getGlobalBounds())&& sf::Mouse::isButtonPressed(sf::Mouse::Left)))) {
 			if (control == 0) {
 				song.play();
 				time2 = 0;
@@ -1322,7 +1358,7 @@ int main()
 		}
 
 		//printf("breakk=%d\n", breakk);
-		//printf("weerboo=%f\n",weerboo);
+		printf("canb=%d\n",canb);
 		
 		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::B))
 		{
